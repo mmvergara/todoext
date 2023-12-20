@@ -8,4 +8,3 @@ import { RouterLink } from "vue-router";
       <RouterLink to="/auth">Auth</RouterLink>
     </div>
 </template>
-@/store

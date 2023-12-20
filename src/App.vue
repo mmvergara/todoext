@@ -56,7 +56,9 @@ FirebaseAuth.onAuthStateChanged(async (user) => {
   background-color: hsl(0, 0%, 10%);
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
+  color: white;
 }
+
 .loading-screen.fade-out {
   opacity: 0;
 }
