@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { FirebaseAuth } from "../firebase/Firebase";
+import { computed } from "vue";
 import { useStore } from "@/store";
 const store = useStore();
-
-FirebaseAuth.onAuthStateChanged((user) => {
-  store.dispatch("fetchUser", user);
-});
-
-const user = computed(() => {
-  return store.state.user;
-});
+const user = computed(() => store.state.user);
 </script>
 <template>
-  <main>
-    <nav class="app-sidebar-container">qsdasd</nav>
+  <main v-if="user.loggedIn">
+    <nav class="app-sidebar-container">
+      <div v-if="user.loggedIn">
+        <h1>{{ user.data?.displayName }}</h1>
+        <button @click="store.dispatch('logOut')">Log Out</button>
+      </div>
+      <div v-else>
+        <h1>Not Logged In</h1>
+        <button @click="store.dispatch('logInWithGoogle')">
+          Log In With Google
+        </button>
+      </div>
+    </nav>
     <slot></slot>
   </main>
 </template>

@@ -1,5 +1,4 @@
 <template>
-  <div class="top-bar"></div>
   <main class="auth-container">
     <div class="auth-sub-container">
       <div class="auth-header">
@@ -46,15 +45,24 @@
 </template>
 
 <script setup lang="ts">
-import { authStore } from "@/store/auth-store";
-
+import { computed } from "vue";
+import { useStore } from "@/store";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const store = useStore();
 const signInWithGoogle = () => {
-  authStore.dispatch("logInWithGoogle");
+  store.dispatch("logInWithGoogle");
 };
+
+const user = computed(() => store.state.user);
+if (user.value.loggedIn) {
+  console.log("Redirecting to home");
+  router.push("/");
+}
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
 .auth-container {
   display: flex;
@@ -150,10 +158,11 @@ const signInWithGoogle = () => {
 }
 
 .gsi-material-button .gsi-material-button-contents {
+  color: black;
   -webkit-flex-grow: 1;
   flex-grow: 1;
   font-family: "Inter", arial, sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: top;
@@ -202,4 +211,4 @@ const signInWithGoogle = () => {
   opacity: 8%;
 }
 </style>
-@/store/store @/store
+

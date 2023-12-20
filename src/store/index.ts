@@ -44,6 +44,19 @@ export const store = createStore<RootState>({
       const res = await signInWithPopup(FirebaseAuth, provider);
       console.log(res);
     },
+    async fetchUser(context, user) {
+      console.log("fecthUser");
+      context.commit("SET_LOGGED_IN", user !== null);
+      if (user) {
+        context.commit("SET_USER", {
+          displayName: user.displayName,
+          email: user.email,
+        });
+      } else {
+        context.commit("SET_USER", null);
+      }
+      return user;
+    },
   },
 });
 
