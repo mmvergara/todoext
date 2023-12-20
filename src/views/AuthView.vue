@@ -62,9 +62,9 @@ if (user.value.loggedIn) {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
-
 .auth-container {
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   padding-top: 100px;
@@ -211,4 +211,3 @@ if (user.value.loggedIn) {
   opacity: 8%;
 }
 </style>
-
