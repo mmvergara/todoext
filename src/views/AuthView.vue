@@ -202,4 +202,4 @@ const signInWithGoogle = () => {
   opacity: 8%;
 }
 </style>
-@/store/store
+@/store/store @/store

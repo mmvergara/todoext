@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { authStore } from "@/store/auth-store";
 import MainLayout from "../components/layout/MainLayout.vue";
 import { RouterLink } from "vue-router";
 </script>
@@ -12,4 +11,4 @@ import { RouterLink } from "vue-router";
     </div>
   </MainLayout>
 </template>
-@/store/store
+@/store

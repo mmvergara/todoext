@@ -1,18 +1,19 @@
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  type User,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { FirebaseAuth } from "@/components/firebase/Firebase";
-import { createStore } from "vuex";
+import { createStore, Store, useStore as baseUseStore } from "vuex";
+import type { InjectionKey } from "vue";
+import type { User } from "firebase/auth";
 
-export const authStore = createStore<{
+export interface RootState {
   user: {
     loggedIn: boolean;
     data: User | null;
   };
-}>({
+}
+
+export const storeKey: InjectionKey<Store<RootState>> = Symbol();
+
+export const store = createStore<RootState>({
   state: {
     user: {
       loggedIn: false,
@@ -45,3 +46,7 @@ export const authStore = createStore<{
     },
   },
 });
+
+export const useStore = () => {
+  return baseUseStore(storeKey);
+};
