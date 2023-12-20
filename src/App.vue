@@ -35,7 +35,7 @@ FirebaseAuth.onAuthStateChanged(async (user) => {
     class="loading-screen"
     :class="{ 'fade-out': !isLoading }"
   >
-    <h1 v-if="isLoading">Todoext | 待办事项</h1>
+    <h1 v-if="isLoading">Todoext</h1>
     <div v-if="isLoading" class="loader"></div>
   </div>
   <MainLayout>

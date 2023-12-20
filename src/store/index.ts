@@ -51,6 +51,7 @@ export const store = createStore<RootState>({
         context.commit("SET_USER", {
           displayName: user.displayName,
           email: user.email,
+          uid: user.uid,
         });
       } else {
         context.commit("SET_USER", null);

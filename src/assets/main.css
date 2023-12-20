@@ -4,7 +4,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: white;
 }
 
 :root {
@@ -14,6 +13,7 @@
   --dark-blue: #023b57;
   --bg-color: #1c1c1c;
   --bg-sidebar: #272727;
+  --text-grayed-out: #a0a0a0
 }
 
 body {

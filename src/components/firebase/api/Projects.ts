@@ -1,6 +1,6 @@
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
-import type { Project, ProjectField } from "../FirebaseTypes";
+import type { ProjectField } from "../FirebaseTypes";
 
 const projectRef = collection(FirestoreMain, "projects");
 
