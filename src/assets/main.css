@@ -13,9 +13,10 @@
   --dark-blue: #023b57;
   --cyan-pri: #00d0ff;
   --cyan-pri-: #059bbc;
-  --bg-color: #1c1c1c;
-  --bg-sidebar: #272727;
-  --text-grayed-out: #a0a0a0;
+  --dark-primary: #1c1c1c;
+  --dark-secondary: #272727;
+  --logout-red:rgb(255, 130, 130);
+  --textt: #a0a0a0;
 }
 
 input {
@@ -23,5 +24,5 @@ input {
 }
 
 body {
-  background-color: var(--bg-color);
+  background-color: var(--dark-primary);
 }

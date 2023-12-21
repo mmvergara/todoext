@@ -67,7 +67,7 @@ onMounted(() => {
 .app-sidebar-container {
   font-family: "Inter", sans-serif;
   padding: 20px;
-  background-color: var(--bg-sidebar);
+  background-color: var(--dark-secondary);
   width: 320px;
   min-width: 320px;
   height: 100vh;
@@ -85,8 +85,8 @@ onMounted(() => {
   font-size: small;
   border: none;
   color: var(--text-grayed-out);
-  background-color: var(--bg-color);
-  
+  background-color: var(--dark-primary);
+
   text-align: center;
   padding: 3px;
   margin: 1em 0em;
@@ -95,7 +95,7 @@ onMounted(() => {
 }
 
 .logout-btn {
-  background-color: var(--bg-color);
+  background-color: var(--dark-primary);
   color: var(--text-grayed-out);
   font-weight: bold;
   border: none;
@@ -114,7 +114,7 @@ onMounted(() => {
 }
 
 .logout-btn:hover {
-  color: rgb(255, 130, 130);
+  color: var(--logout-red);
 }
 
 /* Projects */

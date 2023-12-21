@@ -8,36 +8,35 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
   <div class="project-container">
     <h1 id="project-name">Project Name</h1>
     <div class="project-section-container">
-      <section class="project-section">
-        <div class="section-container">
-          <div class="section-header">
-            <p class="section-name"># Section Name</p>
-            <button class="section-settings" data-cy="section-settings-btn">
-              <EllipsisSvg />
-            </button>
-          </div>
-          <div class="task-container">
-            <div class="task">
-              <div>
-                <button class="complete-task-btn">
-                  <CircleCheckHollow />
-                  <CircleCheckFilled />
-                </button>
-              </div>
-              <p>
-                Task Name asda sm,ld aslmjd lasd jasdl asljd asjld alsjd ajsdjl
-                alsdj alsj djl
-              </p>
-            </div>
-            <d class="task">
-              <p>Task Name</p>
-            </d>
-            <d class="task">
-              <p>Task Name</p>
-            </d>
-          </div>
+      <div class="section-container">
+        <div class="section-header">
+          <p class="section-name"># Section Name</p>
+          <button class="section-settings" data-cy="section-settings-btn">
+            <EllipsisSvg />
+          </button>
         </div>
-      </section>
+        <div class="task-container">
+          <div class="task">
+            <div>
+              <button class="complete-task-btn">
+                <div class="CircleCheckHollow">
+                  <CircleCheckHollow />
+                </div>
+                <div class="CircleCheckFilled">
+                  <CircleCheckFilled class="CircleCheckFilled" />
+                </div>
+              </button>
+            </div>
+            <p>Lorem ipsum dolor sit amet sat consectetur, adipisicing elit.</p>
+          </div>
+          <d class="task">
+            <p>Task Name</p>
+          </d>
+          <d class="task">
+            <p>Task Name</p>
+          </d>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -105,7 +104,7 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
 .task {
   display: flex;
   flex-direction: row;
-  background-color: var(--bg-sidebar);
+  background-color: var(--dark-secondary);
   border: 1px solid #323232;
   border-radius: 5px;
   padding: 10px;
@@ -121,5 +120,22 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
   cursor: pointer;
   margin-top: 3px;
   margin-right: 5px;
+}
+
+.complete-task-btn {
+  position: relative;
+}
+
+.complete-task-btn:hover .CircleCheckFilled {
+  display: block;
+}
+
+.complete-task-btn:hover .CircleCheckHollow {
+  display: none;
+  opacity: 0;
+}
+
+.CircleCheckFilled {
+  display: none;
 }
 </style>

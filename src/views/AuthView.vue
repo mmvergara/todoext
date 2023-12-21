@@ -102,7 +102,7 @@ if (user.value.loggedIn) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-sidebar);
+  background-color: var(--dark-secondary);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 

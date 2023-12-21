@@ -50,19 +50,19 @@ label {
 .project-name-input {
   margin-bottom: 1rem;
   padding: 1rem;
-  width:320px;
+  width: 320px;
   border: none;
   border-radius: 5px;
-  background-color: var(--bg-sidebar);
+  background-color: var(--dark-secondary);
   color: white;
 }
 .add-project-btn {
   padding: 1rem;
   border-radius: 0.25rem;
   border: none;
-  width:320px;
-  background-color: var(--bg-color);
-  border: 2px solid var(--bg-sidebar);
+  width: 320px;
+  background-color: var(--dark-primary);
+  border: 2px solid var(--dark-secondary);
   color: #fff;
   cursor: pointer;
 }
