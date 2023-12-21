@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import EllipsisSvg from "@/components/icons/EllipsisSvg.vue";
 import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
+import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
 </script>
 
 <template>
@@ -16,17 +17,18 @@ import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
             </button>
           </div>
           <div class="task-container">
-            <d class="task">
+            <div class="task">
               <div>
                 <button class="complete-task-btn">
                   <CircleCheckHollow />
+                  <CircleCheckFilled />
                 </button>
               </div>
               <p>
                 Task Name asda sm,ld aslmjd lasd jasdl asljd asjld alsjd ajsdjl
                 alsdj alsj djl
               </p>
-            </d>
+            </div>
             <d class="task">
               <p>Task Name</p>
             </d>
@@ -107,7 +109,6 @@ import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
   border: 1px solid #323232;
   border-radius: 5px;
   padding: 10px;
-  cursor: pointer;
 }
 
 .task:hover {
