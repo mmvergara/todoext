@@ -3,6 +3,7 @@ import { FirebaseAuth } from "@/components/firebase/Firebase";
 import { createStore, Store, useStore as baseUseStore } from "vuex";
 import type { InjectionKey } from "vue";
 import type { User } from "firebase/auth";
+import { toast } from "vue3-toastify";
 
 export interface RootState {
   user: {
@@ -39,11 +40,7 @@ export const store = createStore<RootState>({
       context.commit("SET_USER", null);
     },
 
-    async logInWithGoogle() {
-      const provider = new GoogleAuthProvider();
-      const res = await signInWithPopup(FirebaseAuth, provider);
-      console.log(res);
-    },
+    async logInWithGoogle() {},
     async fetchUser(context, user) {
       console.log("fecthUser");
       context.commit("SET_LOGGED_IN", user !== null);

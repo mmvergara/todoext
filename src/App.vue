@@ -26,6 +26,8 @@ FirebaseAuth.onAuthStateChanged(async (user) => {
     isLoading2.value = false;
   }, 1000);
 });
+
+
 </script>
 
 <template>

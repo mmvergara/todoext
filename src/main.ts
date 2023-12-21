@@ -1,16 +1,23 @@
-import "./assets/main.css";
-import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
-
+//  App and Router
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+
+// Store
 import { store, storeKey } from "./store";
 
+// Toastify
+import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
+
+// Css
+import "./assets/main.css";
+import "vue3-toastify/dist/index.css";
+
 const app = createApp(App);
-app.use(store, storeKey);
 app.use(router);
+app.use(store, storeKey);
 app.use(Vue3Toastify, {
-  autoClose: 1500,
+  theme: "dark",
 } as ToastContainerOptions);
 
 app.mount("#app");

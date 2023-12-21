@@ -3,6 +3,8 @@ import { RouterLink, useRoute } from "vue-router";
 import { computed, onMounted } from "vue";
 import { useStore } from "@/store";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
+import { toast } from "vue3-toastify";
+
 const store = useStore();
 const route = useRoute();
 const user = computed(() => store.state.user);

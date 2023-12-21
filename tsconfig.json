@@ -1,5 +1,4 @@
 {
- 
   "files": [],
   "references": [
     {
@@ -13,6 +12,7 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "types": ["vue3-toastify/global"]
   }
 }

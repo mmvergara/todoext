@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { useStore } from "@/store";
+import { useRouter } from "vue-router";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { FirebaseAuth } from "@/components/firebase/Firebase";
+const router = useRouter();
+const store = useStore();
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(FirebaseAuth, provider);
+};
+
+const user = computed(() => store.state.user);
+if (user.value.loggedIn) {
+  console.log("Redirecting to home");
+  router.push("/");
+}
+</script>
+
 <template>
   <main class="auth-container">
     <div class="auth-sub-container">
@@ -43,23 +63,6 @@
     </div>
   </main>
 </template>
-
-<script setup lang="ts">
-import { computed } from "vue";
-import { useStore } from "@/store";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const store = useStore();
-const signInWithGoogle = () => {
-  store.dispatch("logInWithGoogle");
-};
-
-const user = computed(() => store.state.user);
-if (user.value.loggedIn) {
-  console.log("Redirecting to home");
-  router.push("/");
-}
-</script>
 
 <style scoped>
 .auth-container {
