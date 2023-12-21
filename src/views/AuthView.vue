@@ -92,7 +92,7 @@ if (user.value.loggedIn) {
   font-size: 1.2rem;
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  color: var(--text-grayed-out);
+  color: var(--gray-primary);
 }
 
 .auth-sub-container {

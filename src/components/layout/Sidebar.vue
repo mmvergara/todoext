@@ -84,7 +84,7 @@ onMounted(() => {
 .uid {
   font-size: small;
   border: none;
-  color: var(--text-grayed-out);
+  color: var(--gray-primary);
   background-color: var(--dark-primary);
 
   text-align: center;
@@ -96,7 +96,7 @@ onMounted(() => {
 
 .logout-btn {
   background-color: var(--dark-primary);
-  color: var(--text-grayed-out);
+  color: var(--gray-primary);
   font-weight: bold;
   border: none;
   padding: 10px;
@@ -133,7 +133,7 @@ onMounted(() => {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  color: var(--text-grayed-out);
+  color: var(--gray-primary);
   text-decoration: none;
 }
 
@@ -142,6 +142,6 @@ onMounted(() => {
 }
 
 .project.selected {
-  color: #00d0ff;
+  color: var(--cyan-primary);
 }
 </style>

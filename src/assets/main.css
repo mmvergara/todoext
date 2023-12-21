@@ -11,12 +11,13 @@
     "Apple Color Emoji", Helvetica, Arial, sans-serif, "Segoe UI Emoji",
     "Segoe UI Symbol";
   --dark-blue: #023b57;
-  --cyan-pri: #00d0ff;
-  --cyan-pri-: #059bbc;
+  --cyan-primary: #00d0ff;
+  --cyan-secondary: #059bbc;
+
   --dark-primary: #1c1c1c;
   --dark-secondary: #272727;
-  --logout-red:rgb(255, 130, 130);
-  --textt: #a0a0a0;
+  --logout-red: rgb(255, 130, 130);
+  --gray-primary: #a0a0a0;
 }
 
 input {
