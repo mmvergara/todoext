@@ -10,7 +10,7 @@ import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
       <section class="project-section">
         <div class="section-container">
           <div class="section-header">
-            <p class="section-name">Section Name</p>
+            <p class="section-name"># Section Name</p>
             <button class="section-settings" data-cy="section-settings-btn">
               <EllipsisSvg />
             </button>
@@ -118,7 +118,7 @@ import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin: 3px;
+  margin-top: 3px;
   margin-right: 5px;
 }
 </style>
