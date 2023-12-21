@@ -12,8 +12,8 @@ const isLoading2 = ref(true);
 FirebaseAuth.onAuthStateChanged(async (user) => {
   store.dispatch("fetchUser", user);
 
-  // if the user is logged in, redirect to the home page
-  if (user) {
+  // if the user is logged in and in the auth page, redirect to home
+  if (user && router.currentRoute.value.path === "/auth") {
     router.push("/");
   }
 
