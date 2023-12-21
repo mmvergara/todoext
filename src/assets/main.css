@@ -13,7 +13,11 @@
   --dark-blue: #023b57;
   --bg-color: #1c1c1c;
   --bg-sidebar: #272727;
-  --text-grayed-out: #a0a0a0
+  --text-grayed-out: #a0a0a0;
+}
+
+input {
+  font-family: "Inter", sans-serif;
 }
 
 body {
