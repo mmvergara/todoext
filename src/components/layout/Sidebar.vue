@@ -1,39 +1,39 @@
 <script setup lang="ts">
+import { computed, ref, watchEffect } from "vue";
 import { RouterLink, useRoute } from "vue-router";
-import { computed, onMounted } from "vue";
 import { useStore } from "@/store";
+import { getProjects } from "../firebase/api/Projects";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
-import { toast } from "vue3-toastify";
 
 const store = useStore();
 const route = useRoute();
 const user = computed(() => store.state.user);
+const isLoading = ref(true);
+const projectLinks = ref<
+  {
+    id: string;
+    name: string;
+    path: string;
+  }[]
+>([]);
 
-const projectLinks = [
-  {
-    id: 1,
-    name: "Project 1",
-    path: "/project/1",
-  },
-  {
-    id: 2,
-    name: "Project 2",
-    path: "/project/2",
-  },
-  {
-    id: 3,
-    name: "Project 3",
-    path: "/project/3",
-  },
-  {
-    id: 4,
-    name: "Project 4",
-    path: "/project/4",
-  },
-];
-
-onMounted(() => {
-  console.log("Sidebar mounted");
+const fetchProjects = async () => {
+  if (user.value.data) {
+    isLoading.value = true;
+    const projects = await getProjects(user.value.data.uid);
+    projects.forEach((project) => {
+      projectLinks.value.push({
+        id: project.id,
+        name: project.projectName,
+        path: `/project/${project.id}`,
+      });
+    });
+    isLoading.value = false;
+  }
+};
+watchEffect(() => {
+  console.log("updated");
+  fetchProjects();
 });
 </script>
 
@@ -42,7 +42,7 @@ onMounted(() => {
     <div class="app-sidebar-nav">
       <p class="name">Hello! | {{ user.data?.displayName }}</p>
       <p class="uid">{{ user.data?.uid }}</p>
-      <h2 class="my-projects">My Projects</h2>
+      <h2 class="my-projects">My Projects 📒</h2>
       <section class="projects-list-container">
         <RouterLink
           v-for="project in projectLinks"
@@ -53,8 +53,12 @@ onMounted(() => {
         >
           # {{ project.name }}
         </RouterLink>
-
-        <RouterLink to="/add-project" class="project">
+        <div v-if="isLoading">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+        <RouterLink v-else to="/add-project" class="project">
           + Add Project
         </RouterLink>
       </section>
@@ -66,6 +70,26 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* Skeleton with effects */
+
+.skeleton {
+  background-color: var(--dark-primary);
+  height: 30px;
+  width: 100%;
+  border-radius: 5px;
+  margin: 5px 0px;
+  animation: skeleton 1s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .app-sidebar-container {
   font-family: "Inter", sans-serif;
   padding: 20px;

@@ -1,38 +1,34 @@
 export type Project = {
   id: string;
-  title: string;
-  sections: Section[];
+  projectName: string;
   ownerID: string;
-  collaborators: string[];
 };
 
 export type ProjectField = {
-  title: string;
-  sections: SectionField[];
+  projectName: string;
   ownerID: string;
-  collaborators: string[];
 };
 
 export type Section = {
   id: string;
-  title: string;
+  sectionName: string;
   tasks: Task[];
 };
 
 export type SectionField = {
-  title: string;
+  sectionName: string;
   tasks: TaskField[];
 };
 
 export type Task = {
   id: string;
-  title: string;
+  taskName: string;
   description: string;
   dueDate: string;
 };
 
 export type TaskField = {
-  title: string;
+  taskName: string;
   description: string;
   dueDate: string;
 };

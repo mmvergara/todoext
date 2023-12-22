@@ -1,22 +1,34 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "@/store";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
+import { addProject } from "@/components/firebase/api/Projects";
 const store = useStore();
-const router = useRouter();
 const projectName = ref("");
 
-const addProject = async () => {
-  const project = {
-    name: projectName.value,
-  };
+const user = computed(() => store.state.user);
+
+const isLoading = ref(false);
+
+const handleAddProject = async () => {
+  isLoading.value = true;
+  try {
+    if (user.value.data) {
+      await addProject(projectName.value, user.value.data.uid);
+    }
+    toast.success("Project Added 🎉");
+  } catch (error) {
+    toast.error("Something went wrong 😢");
+  }
+  isLoading.value = false;
 };
 </script>
 
 <template>
   <div class="add-project-view">
     <h1>Add Project</h1>
-    <form @submit.prevent="addProject">
+    <form @submit.prevent="handleAddProject">
       <input
         type="text"
         class="project-name-input"
@@ -24,7 +36,12 @@ const addProject = async () => {
         v-model="projectName"
         placeholder="Project Name"
       />
-      <button type="submit" data-cy="add-project-btn" class="add-project-btn">
+      <button
+        :disabled="isLoading"
+        type="submit"
+        data-cy="add-project-btn"
+        class="add-project-btn"
+      >
         Add Project
       </button>
     </form>
