@@ -76,7 +76,6 @@ const submitProject = async () => {
 .project.btn:hover {
   background-color: #014858;
 }
-
 .add-project-form {
   display: flex;
   flex-direction: column;

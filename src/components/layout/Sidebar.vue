@@ -5,7 +5,6 @@ import { useStore } from "@/store";
 import { getProjects } from "../firebase/api/Projects";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
 import AddProject from "@/components/AddProject.vue";
-import type { Project } from "../firebase/FirebaseTypes";
 
 const store = useStore();
 const route = useRoute();
