@@ -6,7 +6,6 @@ import { ref } from "vue";
 import MainLayout from "./components/layout/MainLayout.vue";
 const store = useStore();
 const router = useRouter();
-
 const isLoading = ref(true);
 const isLoading2 = ref(true);
 FirebaseAuth.onAuthStateChanged(async (user) => {
@@ -26,8 +25,6 @@ FirebaseAuth.onAuthStateChanged(async (user) => {
     isLoading2.value = false;
   }, 1000);
 });
-
-
 </script>
 
 <template>

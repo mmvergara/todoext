@@ -4,18 +4,19 @@ import { RouterLink, useRoute } from "vue-router";
 import { useStore } from "@/store";
 import { getProjects } from "../firebase/api/Projects";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
+import AddProject from "@/components/AddProject.vue";
+import type { Project } from "../firebase/FirebaseTypes";
 
 const store = useStore();
 const route = useRoute();
 const user = computed(() => store.state.user);
 const isLoading = ref(true);
-const projectLinks = ref<
-  {
-    id: string;
-    name: string;
-    path: string;
-  }[]
->([]);
+type ProjectLink = {
+  id: string;
+  name: string;
+  path: string;
+};
+const projectLinks = ref<ProjectLink[]>([]);
 
 const fetchProjects = async () => {
   if (user.value.data) {
@@ -31,6 +32,12 @@ const fetchProjects = async () => {
     isLoading.value = false;
   }
 };
+
+const handleAddProject = async (project: ProjectLink) => {
+  console.log(project);
+  projectLinks.value.push(project);
+};
+
 watchEffect(() => {
   console.log("updated");
   fetchProjects();
@@ -42,7 +49,7 @@ watchEffect(() => {
     <div class="app-sidebar-nav">
       <p class="name">Hello! | {{ user.data?.displayName }}</p>
       <p class="uid">{{ user.data?.uid }}</p>
-      <h2 class="my-projects">My Projects 📒</h2>
+      <h2 class="my-projects-text">My Projects 📒</h2>
       <section class="projects-list-container">
         <RouterLink
           v-for="project in projectLinks"
@@ -58,9 +65,7 @@ watchEffect(() => {
           <div class="skeleton"></div>
           <div class="skeleton"></div>
         </div>
-        <RouterLink v-else to="/add-project" class="project">
-          + Add Project
-        </RouterLink>
+        <AddProject @handle-add-project="handleAddProject" />
       </section>
     </div>
     <button class="logout-btn" @click="store.dispatch('logOut')">
@@ -70,26 +75,6 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-/* Skeleton with effects */
-
-.skeleton {
-  background-color: var(--dark-primary);
-  height: 30px;
-  width: 100%;
-  border-radius: 5px;
-  margin: 5px 0px;
-  animation: skeleton 1s ease-in-out infinite alternate;
-}
-
-@keyframes skeleton {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .app-sidebar-container {
   font-family: "Inter", sans-serif;
   padding: 20px;
@@ -112,14 +97,12 @@ watchEffect(() => {
   border: none;
   color: var(--gray-primary);
   background-color: var(--dark-primary);
-
   text-align: center;
   padding: 3px;
   margin: 1em 0em;
   border-radius: 5px;
   cursor: pointer;
 }
-
 .logout-btn {
   background-color: var(--dark-primary);
   color: var(--gray-primary);
@@ -144,12 +127,11 @@ watchEffect(() => {
 }
 
 /* Projects */
-
 .projects-list-container {
   display: flex;
   flex-direction: column;
 }
-.my-projects {
+.my-projects-text {
   color: white;
   font-size: 1rem;
   padding: 2px 10px;
@@ -169,5 +151,24 @@ watchEffect(() => {
 
 .project.selected {
   color: var(--cyan-primary);
+}
+
+/* Skeleton with effects */
+.skeleton {
+  background-color: var(--dark-primary);
+  height: 30px;
+  width: 100%;
+  border-radius: 5px;
+  margin: 5px 0px;
+  animation: skeleton 1s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

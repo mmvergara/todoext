@@ -29,12 +29,12 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
             </div>
             <p>Lorem ipsum dolor sit amet sat consectetur, adipisicing elit.</p>
           </div>
-          <d class="task">
+          <div class="task">
             <p>Task Name</p>
-          </d>
-          <d class="task">
+          </div>
+          <div class="task">
             <p>Task Name</p>
-          </d>
+          </div>
         </div>
       </div>
     </div>

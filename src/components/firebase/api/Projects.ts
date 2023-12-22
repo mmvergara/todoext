@@ -10,13 +10,14 @@ import type { Project, ProjectField } from "../FirebaseTypes";
 
 const projectRef = collection(FirestoreMain, "projects");
 
-export const addProject = async (userID: string, projectName: string) => {
+export const addProject = async (projectName: string, userID: string) => {
   const Project: ProjectField = {
     projectName,
     ownerID: userID,
   };
   const docRef = await addDoc(projectRef, Project);
-  console.log("Document written with ID: ", docRef.id);
+  console.log("New Project with ID: ", docRef.id);
+  return docRef.id;
 };
 
 export const deleteProject = async (projectID: string) => {

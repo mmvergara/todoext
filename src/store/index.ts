@@ -3,7 +3,6 @@ import { FirebaseAuth } from "@/components/firebase/Firebase";
 import { createStore, Store, useStore as baseUseStore } from "vuex";
 import type { InjectionKey } from "vue";
 import type { User } from "firebase/auth";
-import { toast } from "vue3-toastify";
 
 export interface RootState {
   user: {
