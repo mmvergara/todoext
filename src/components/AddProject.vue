@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed} from "vue";
 import { useStore } from "@/store";
 import { toast } from "vue3-toastify";
 import { addProject } from "./firebase/api/Projects";
@@ -76,6 +76,7 @@ const submitProject = async () => {
 .project.btn:hover {
   background-color: #014858;
 }
+
 .add-project-form {
   display: flex;
   flex-direction: column;
