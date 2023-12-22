@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useStore } from "@/store";
-import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
 import { addProject } from "@/components/firebase/api/Projects";
+import { useStore } from "@/store";
+import { toast } from "vue3-toastify";
 const store = useStore();
-const projectName = ref("");
-
 const user = computed(() => store.state.user);
-
+const projectName = ref("");
 const isLoading = ref(false);
 
 const handleAddProject = async () => {
