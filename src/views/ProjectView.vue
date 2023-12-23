@@ -2,6 +2,17 @@
 import EllipsisSvg from "@/components/icons/EllipsisSvg.vue";
 import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
 import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
+import { useRouter } from "vue-router";
+import { ref, onMounted, watchEffect } from "vue";
+import { getProjectData } from "@/components/firebase/api/Projects";
+
+const router = useRouter();
+const projectId = router.currentRoute.value.params.id as string;
+
+watchEffect(async () => {
+  const data = await getProjectData(projectId);
+  console.log(data);
+});
 </script>
 
 <template>
@@ -63,9 +74,9 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
   border: 1px solid transparent;
   transition: border 0.2s ease-in-out;
 }
-.section-container:hover {
+/* .section-container:hover {
   border: 1px solid #323232;
-}
+} */
 
 .section-header {
   display: flex;

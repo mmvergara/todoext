@@ -1,34 +1,32 @@
+import type { Timestamp } from "firebase/firestore";
+
 export type Project = {
-  id: string;
+  projectId: string;
   projectName: string;
-  ownerID: string;
+  ownerId: string;
+  collaborators: string[];
+  sections: Section[];
+  createdAt: Timestamp;
 };
 
 export type ProjectField = {
   projectName: string;
-  ownerID: string;
+  ownerId: string;
+  collaborators: string[];
+  sections: Section[];
+  createdAt: Timestamp;
 };
 
 export type Section = {
-  id: string;
+  sectionId: string;
   sectionName: string;
   tasks: Task[];
 };
 
-export type SectionField = {
-  sectionName: string;
-  tasks: TaskField[];
-};
-
 export type Task = {
-  id: string;
+  taskId: string;
   taskName: string;
   description: string;
   dueDate: string;
-};
-
-export type TaskField = {
-  taskName: string;
-  description: string;
-  dueDate: string;
+  createdAt: Timestamp;
 };

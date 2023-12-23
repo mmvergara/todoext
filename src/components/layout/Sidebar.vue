@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { getProjects } from "../firebase/api/Projects";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
@@ -8,6 +8,7 @@ import AddProject from "@/components/AddProject.vue";
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 const user = computed(() => store.state.user);
 const isLoading = ref(true);
 type ProjectLink = {
@@ -20,15 +21,20 @@ const projectLinks = ref<ProjectLink[]>([]);
 const fetchProjects = async () => {
   if (user.value.data) {
     isLoading.value = true;
-    const projects = await getProjects(user.value.data.uid);
+    const projects = await getProjects();
     projects.forEach((project) => {
       projectLinks.value.push({
-        id: project.id,
+        id: project.projectId,
         name: project.projectName,
-        path: `/project/${project.id}`,
+        path: `/project/${project.projectId}`,
       });
     });
     isLoading.value = false;
+  }
+
+  //  Redirect to first project if no project is selected
+  if (projectLinks.value.length > 0 && route.fullPath === "/") {
+    router.push(projectLinks.value[0].path);
   }
 };
 
