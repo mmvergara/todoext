@@ -37,9 +37,11 @@ FirebaseAuth.onAuthStateChanged(async (user) => {
     <h1 v-if="isLoading">Todoext</h1>
     <div v-if="isLoading" class="loader"></div>
   </div>
-  <MainLayout>
-    <RouterView />
-  </MainLayout>
+  <div v-if="!isLoading">
+    <MainLayout>
+      <RouterView />
+    </MainLayout>
+  </div>
 </template>
 
 <style scoped>
