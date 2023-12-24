@@ -12,6 +12,10 @@ const props = defineProps({
     type: Object as PropType<Section>,
     required: true,
   },
+  projectId: {
+    type: String,
+    required: true,
+  },
 });
 
 const section = ref<Section>(props.section);
@@ -34,7 +38,11 @@ const handleAddTask = (task: TaskData) => {
         :key="task.taskId"
         :-task-data="task"
       />
-      <AddTask @handle-task-add="handleAddTask" />
+      <AddTask
+        :project-id="projectId"
+        :section-id="section.sectionId"
+        @handle-task-add="handleAddTask"
+      />
     </div>
   </div>
 </template>

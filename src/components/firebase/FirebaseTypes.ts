@@ -31,7 +31,6 @@ export type SectionField = {
 export type Task = {
   taskId: string;
   taskName: string;
-  description: string;
-  dueDate: string;
   createdAt: Timestamp;
 };
+

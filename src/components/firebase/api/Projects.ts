@@ -10,7 +10,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
-import type { Project, ProjectField, Section } from "../FirebaseTypes";
+import type {
+  Project,
+  ProjectField,
+  Section,
+  SectionField,
+} from "../FirebaseTypes";
 
 const projectRef = collection(FirestoreMain, "projects");
 export const getProjects = async () => {
@@ -78,8 +83,7 @@ export const getProjectSections = async (projectID: string) => {
 };
 
 export const addSection = async (projectID: string, sectionName: string) => {
-  const section = {
-    sectionId: `${sectionName}${Date.now() + Math.random()}`,
+  const section: SectionField = {
     sectionName,
     tasks: [],
     createdAt: Timestamp.now(),
@@ -91,8 +95,11 @@ export const addSection = async (projectID: string, sectionName: string) => {
     "sections"
   );
   const res = await addDoc(projectDocRef, section);
-  console.log(`%cCreated Section: ${res}`, "color: green;");
-  return res;
+  const sectionRes: Section = {
+    ...section,
+    sectionId: res.id,
+  };
+  return sectionRes;
 };
 
 export const addTask = async (

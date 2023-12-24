@@ -41,9 +41,10 @@ watchEffect(async () => {
         v-for="section in sections"
         :key="section.sectionId"
         :section="section"
+        :project-id="projectId"
       />
       <AddSection
-        :project-i-d="projectId"
+        :project-id="projectId"
         @handle-section-add="handleSectionAdd"
       />
     </div>

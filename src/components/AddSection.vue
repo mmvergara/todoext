@@ -4,7 +4,7 @@ import { addSection } from "./firebase/api/Projects";
 import { toast } from "vue3-toastify";
 
 const props = defineProps({
-  projectID: {
+  projectId: {
     type: String,
     required: true,
   },
@@ -14,7 +14,7 @@ const emit = defineEmits(["handle-section-add"]);
 const sectionName = ref("");
 const handleAddSection = async () => {
   try {
-    const res = await addSection(props.projectID, sectionName.value);
+    const res = await addSection(props.projectId, sectionName.value);
     emit("handle-section-add", res);
     toast.success("Section Added 🎉");
   } catch (error) {

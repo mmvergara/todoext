@@ -4,12 +4,20 @@ import { addTask } from "./firebase/api/Tasks";
 
 const taskName = ref("");
 const emit = defineEmits(["handle-task-add"]);
-const addTaskHandler = () => {
-  console.log(taskName.value);
+const props = defineProps({
+  sectionId: {
+    type: String,
+    required: true,
+  },
+  projectId: {
+    type: String,
+    required: true,
+  },
+});
 
-  addTask
-  emit("handle-task-add", taskName.value);
-
+const addTaskHandler = async () => {
+  const res = await addTask(props.projectId, props.sectionId, taskName.value);
+  emit("handle-task-add", res);
   taskName.value = "";
 };
 </script>
