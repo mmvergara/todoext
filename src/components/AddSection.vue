@@ -1,13 +1,29 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { addSection } from "./firebase/api/Projects";
+import { toast } from "vue3-toastify";
+
+const props = defineProps({
+  projectID: {
+    type: String,
+    required: true,
+  },
+});
+const emit = defineEmits(["handle-section-add"]);
 
 const sectionName = ref("");
-const addSection = () => {
-  console.log(sectionName.value);
+const handleAddSection = async () => {
+  try {
+    const res = await addSection(props.projectID, sectionName.value);
+    emit("handle-section-add", res);
+    toast.success("Section Added 🎉");
+  } catch (error) {
+    toast.error("Something went wrong 😢");
+  }
 };
 </script>
 <template>
-  <form class="add-section-container" @submit.prevent="addSection">
+  <form class="add-section-container" @submit.prevent="handleAddSection">
     <input
       class="add-section-input"
       type="text"

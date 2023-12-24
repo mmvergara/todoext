@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { addTask } from "./firebase/api/Tasks";
 
 const taskName = ref("");
-
+const emit = defineEmits(["handle-task-add"]);
 const addTaskHandler = () => {
   console.log(taskName.value);
+
+  addTask
+  emit("handle-task-add", taskName.value);
 
   taskName.value = "";
 };

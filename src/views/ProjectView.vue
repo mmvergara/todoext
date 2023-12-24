@@ -1,27 +1,51 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { watchEffect } from "vue";
-import { getProjectData } from "@/components/firebase/api/Projects";
-import Section from "@/components/Section.vue";
+import { watchEffect, ref } from "vue";
+import {
+  getProjectData,
+  getProjectSections,
+} from "@/components/firebase/api/Projects";
+import ProjectSection from "@/components/Section.vue";
 import AddSection from "@/components/AddSection.vue";
+import type { Project, Section } from "@/components/firebase/FirebaseTypes";
 
 const router = useRouter();
 const projectId = router.currentRoute.value.params.id as string;
+const project = ref<Project | null>(null);
+const sections = ref<Section[]>([]);
 
+const handleSectionAdd = (section: Section) => {
+  sections.value.push(section);
+};
 watchEffect(async () => {
-  const data = await getProjectData(projectId);
-  console.log(data);
+  try {
+    const [projectData, projectSections] = await Promise.all([
+      getProjectData(projectId),
+      getProjectSections(projectId),
+    ]);
+    if (projectData) project.value = projectData;
+    else router.push("/");
+
+    if (projectSections) sections.value = projectSections;
+  } catch (err) {
+    console.error(err);
+  }
 });
 </script>
 
 <template>
-  <div class="project-container">
-    <h1 id="project-name">Project Name</h1>
+  <div v-if="project" class="project-container">
+    <h1 id="project-name">{{ project.projectName }}</h1>
     <div class="project-section-container">
-      <Section />
-      <Section />
-      <Section />
-      <AddSection />
+      <ProjectSection
+        v-for="section in sections"
+        :key="section.sectionId"
+        :section="section"
+      />
+      <AddSection
+        :project-i-d="projectId"
+        @handle-section-add="handleSectionAdd"
+      />
     </div>
   </div>
 </template>

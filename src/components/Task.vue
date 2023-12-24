@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
 import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
-import { ref } from "vue";
+import { ref, type PropType } from "vue";
+import type { Task } from "./firebase/FirebaseTypes";
+
+const props = defineProps({
+  TaskData: {
+    type: Object as PropType<Task>,
+    required: true,
+  },
+});
 
 const audio = ref<HTMLAudioElement | null>(null);
 const completeTaskHandler = () => {

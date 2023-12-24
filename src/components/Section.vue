@@ -2,23 +2,39 @@
 import EllipsisSvg from "@/components/icons/EllipsisSvg.vue";
 import Task from "@/components/Task.vue";
 import AddTask from "@/components/AddTask.vue";
+import type {
+  Section,
+  Task as TaskData,
+} from "@/components/firebase/FirebaseTypes";
+import { ref, type PropType } from "vue";
+const props = defineProps({
+  section: {
+    type: Object as PropType<Section>,
+    required: true,
+  },
+});
+
+const section = ref<Section>(props.section);
+
+const handleAddTask = (task: TaskData) => {
+  section.value.tasks.push(task);
+};
 </script>
 <template>
   <div class="section-container">
     <div class="section-header">
-      <p class="section-name"># Section Name</p>
+      <p class="section-name"># {{ section.sectionName }}</p>
       <button class="section-settings" data-cy="section-settings-btn">
         <EllipsisSvg />
       </button>
     </div>
     <div class="section-task-container">
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <AddTask />
+      <Task
+        v-for="task in section.tasks"
+        :key="task.taskId"
+        :-task-data="task"
+      />
+      <AddTask @handle-task-add="handleAddTask" />
     </div>
   </div>
 </template>
