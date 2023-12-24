@@ -1,22 +1,12 @@
 import {
   Timestamp,
-  addDoc,
   arrayUnion,
-  collection,
-  deleteDoc,
   doc,
   getDoc,
-  getDocs,
   updateDoc,
 } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
-import type {
-  Project,
-  ProjectField,
-  Section,
-  SectionField,
-  Task,
-} from "../FirebaseTypes";
+import type { Section, Task } from "../FirebaseTypes";
 
 export const addTask = async (
   projectID: string,
@@ -40,4 +30,24 @@ export const addTask = async (
   });
   console.log(`%cAdd Task: ${taskName}`, "color: green;");
   return task;
+};
+
+export const deleteTask = async (
+  projectId: string,
+  sectionId: string,
+  taskId: string
+) => {
+  const taskRef = doc(
+    FirestoreMain,
+    "projects",
+    projectId,
+    "sections",
+    sectionId
+  );
+  const taskSnap = await getDoc(taskRef);
+  const taskData = taskSnap.data() as Section;
+
+  return updateDoc(taskRef, {
+    tasks: taskData.tasks.filter((task: Task) => task.taskId !== taskId),
+  });
 };

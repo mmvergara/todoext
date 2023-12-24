@@ -50,7 +50,7 @@ const addTaskHandler = async () => {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  width: 100%;
+  width: 302px;
   background-color: var(--dark-primary);
   color: white;
 }

@@ -6,7 +6,10 @@ import type {
   Section,
   Task as TaskData,
 } from "@/components/firebase/FirebaseTypes";
-import { ref, type PropType } from "vue";
+import { ref, type PropType, onUnmounted } from "vue";
+import { doc, onSnapshot } from "firebase/firestore";
+import { FirestoreMain } from "./firebase/Firebase";
+
 const props = defineProps({
   section: {
     type: Object as PropType<Section>,
@@ -19,10 +22,25 @@ const props = defineProps({
 });
 
 const section = ref<Section>(props.section);
+const unsub = onSnapshot(
+  doc(
+    FirestoreMain,
+    "projects",
+    props.projectId,
+    "sections",
+    props.section.sectionId
+  ),
+  (doc) => {
+    const data = doc.data() as Section;
+    data.sectionId = doc.id;
+    section.value = data;
+  }
+);
 
-const handleAddTask = (task: TaskData) => {
-  section.value.tasks.push(task);
-};
+onUnmounted(() => {
+  console.log("unsub");
+  unsub();
+});
 </script>
 <template>
   <div class="section-container">
@@ -36,13 +54,11 @@ const handleAddTask = (task: TaskData) => {
       <Task
         v-for="task in section.tasks"
         :key="task.taskId"
-        :-task-data="task"
-      />
-      <AddTask
+        :task-data="task"
         :project-id="projectId"
         :section-id="section.sectionId"
-        @handle-task-add="handleAddTask"
       />
+      <AddTask :project-id="projectId" :section-id="section.sectionId" />
     </div>
   </div>
 </template>

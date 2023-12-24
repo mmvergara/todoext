@@ -3,10 +3,19 @@ import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
 import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
 import { ref, type PropType } from "vue";
 import type { Task } from "./firebase/FirebaseTypes";
+import { deleteTask } from "./firebase/api/Tasks";
 
 const props = defineProps({
-  TaskData: {
+  taskData: {
     type: Object as PropType<Task>,
+    required: true,
+  },
+  projectId: {
+    type: String,
+    required: true,
+  },
+  sectionId: {
+    type: String,
     required: true,
   },
 });
@@ -16,6 +25,7 @@ const completeTaskHandler = () => {
   if (audio.value) {
     audio.value.play();
   }
+  deleteTask(props.projectId, props.sectionId, props.taskData.taskId);
 };
 </script>
 <template>
@@ -33,7 +43,7 @@ const completeTaskHandler = () => {
         </div>
       </button>
     </div>
-    <p>Lorem ipsum dolor sit amet sat consectetur, adipisicing elit.</p>
+    <p class="task-name">{{ props.taskData.taskName }}</p>
   </div>
 </template>
 
@@ -76,5 +86,10 @@ const completeTaskHandler = () => {
 .complete-task-btn:hover .CircleCheckHollow {
   display: none;
   opacity: 0;
+}
+
+.task-name {
+  margin-top: 1px;
+  margin-left: 2px;
 }
 </style>
