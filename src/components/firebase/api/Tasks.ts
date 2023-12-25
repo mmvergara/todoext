@@ -43,10 +43,39 @@ export const deleteTask = async (
     "sections",
     sectionId
   );
-  const taskSnap = await getDoc(taskRef);
-  const taskData = taskSnap.data() as Section;
+  const sectionSnap = await getDoc(taskRef);
+  const sectionData = sectionSnap.data() as Section;
 
   return updateDoc(taskRef, {
-    tasks: taskData.tasks.filter((task: Task) => task.taskId !== taskId),
+    tasks: sectionData.tasks.filter((task: Task) => task.taskId !== taskId),
+  });
+};
+
+export const updateTask = async (
+  projectId: string,
+  sectionId: string,
+  taskId: string,
+  newTaskName: string
+) => {
+  const taskRef = doc(
+    FirestoreMain,
+    "projects",
+    projectId,
+    "sections",
+    sectionId
+  );
+  const sectionSnap = await getDoc(taskRef);
+  const sectionData = sectionSnap.data() as Section;
+
+  return updateDoc(taskRef, {
+    tasks: sectionData.tasks.map((task: Task) => {
+      if (task.taskId === taskId) {
+        return {
+          ...task,
+          newTaskName,
+        };
+      }
+      return task;
+    }),
   });
 };

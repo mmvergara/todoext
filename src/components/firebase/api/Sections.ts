@@ -6,10 +6,8 @@ import type {
 import { Timestamp, addDoc, collection, getDocs } from "firebase/firestore";
 
 export const getProjectSections = async (projectID: string) => {
-  console.log("Getting sections for ", projectID);
   const docRef = collection(FirestoreMain, "projects", projectID, "sections");
   const docsSnap = await getDocs(docRef);
-  console.log(docsSnap.docs);
   const sections: Section[] = [];
   docsSnap.forEach((doc) => {
     const data = doc.data();
@@ -30,9 +28,6 @@ export const addSection = async (projectId: string, sectionName: string) => {
     tasks: [],
     createdAt: Timestamp.now(),
   };
-  console.log(projectId);
-  console.log(projectId);
-  console.log(projectId);
   const projectDocRef = collection(
     FirestoreMain,
     "projects",
