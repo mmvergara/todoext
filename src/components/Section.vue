@@ -9,14 +9,14 @@ import type {
 import { ref, type PropType, onUnmounted } from "vue";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FirestoreMain } from "./firebase/Firebase";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const projectId = router.currentRoute.value.params.id as string;
 
 const props = defineProps({
   section: {
     type: Object as PropType<Section>,
-    required: true,
-  },
-  projectId: {
-    type: String,
     required: true,
   },
 });
@@ -26,12 +26,13 @@ const unsub = onSnapshot(
   doc(
     FirestoreMain,
     "projects",
-    props.projectId,
+    projectId,
     "sections",
     props.section.sectionId
   ),
   (doc) => {
-    const data = doc.data() as Section;
+    let data = doc.data() as Section | undefined;
+    if (!data) return;
     data.sectionId = doc.id;
     section.value = data;
   }

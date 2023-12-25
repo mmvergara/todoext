@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { addSection } from "./firebase/api/Projects";
 import { toast } from "vue3-toastify";
+import { useRouter } from "vue-router";
+import { addSection } from "./firebase/api/Sections";
 
-const props = defineProps({
-  projectId: {
-    type: String,
-    required: true,
-  },
-});
+const router = useRouter();
+const projectId = router.currentRoute.value.params.id as string;
 const emit = defineEmits(["handle-section-add"]);
 
 const sectionName = ref("");
 const handleAddSection = async () => {
   try {
-    const res = await addSection(props.projectId, sectionName.value);
+    const res = await addSection(projectId, sectionName.value);
     emit("handle-section-add", res);
     toast.success("Section Added 🎉");
   } catch (error) {

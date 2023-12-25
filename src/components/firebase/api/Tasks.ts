@@ -28,7 +28,6 @@ export const addTask = async (
   await updateDoc(taskRef, {
     tasks: arrayUnion(task),
   });
-  console.log(`%cAdd Task: ${taskName}`, "color: green;");
   return task;
 };
 

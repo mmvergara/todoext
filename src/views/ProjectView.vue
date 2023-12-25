@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { watchEffect, ref } from "vue";
-import {
-  getProjectData,
-  getProjectSections,
-} from "@/components/firebase/api/Projects";
+import { onBeforeRouteUpdate, useRouter } from "vue-router";
+import { watch, ref, onMounted } from "vue";
+import { getProjectData } from "@/components/firebase/api/Projects";
 import ProjectSection from "@/components/Section.vue";
 import AddSection from "@/components/AddSection.vue";
 import type { Project, Section } from "@/components/firebase/FirebaseTypes";
+import { getProjectSections } from "@/components/firebase/api/Sections";
 
 const router = useRouter();
-const projectId = router.currentRoute.value.params.id as string;
 const project = ref<Project | null>(null);
 const sections = ref<Section[]>([]);
 
 const handleSectionAdd = (section: Section) => {
   sections.value.push(section);
 };
-watchEffect(async () => {
+
+const fetchProjectData = async (projectId: string) => {
   try {
     const [projectData, projectSections] = await Promise.all([
       getProjectData(projectId),
@@ -25,11 +23,19 @@ watchEffect(async () => {
     ]);
     if (projectData) project.value = projectData;
     else router.push("/");
-
+    console.log(projectSections);
     if (projectSections) sections.value = projectSections;
   } catch (err) {
     console.error(err);
   }
+};
+
+onMounted(() => {
+  fetchProjectData(router.currentRoute.value.params.id as string);
+});
+
+onBeforeRouteUpdate((to) => {
+  fetchProjectData(to.params.id as string);
 });
 </script>
 
@@ -41,12 +47,8 @@ watchEffect(async () => {
         v-for="section in sections"
         :key="section.sectionId"
         :section="section"
-        :project-id="projectId"
       />
-      <AddSection
-        :project-id="projectId"
-        @handle-section-add="handleSectionAdd"
-      />
+      <AddSection @handle-section-add="handleSectionAdd" />
     </div>
   </div>
 </template>
