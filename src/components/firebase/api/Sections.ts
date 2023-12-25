@@ -40,4 +40,6 @@ export const addSection = async (projectId: string, sectionName: string) => {
     sectionId: res.id,
   };
   return sectionRes;
-};
+}; 
+
+

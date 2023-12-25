@@ -21,22 +21,22 @@ const fetchProjectData = async (projectId: string) => {
       getProjectData(projectId),
       getProjectSections(projectId),
     ]);
+    // if there is no such project with the given id, redirect to home
     if (projectData) project.value = projectData;
     else router.push("/");
-    console.log(projectSections);
+
     if (projectSections) sections.value = projectSections;
   } catch (err) {
     console.error(err);
   }
 };
 
-onMounted(() => {
-  fetchProjectData(router.currentRoute.value.params.id as string);
-});
-
-onBeforeRouteUpdate((to) => {
-  fetchProjectData(to.params.id as string);
-});
+watch(
+  () => router.currentRoute.value.params.id,
+  (projectId) => {
+    fetchProjectData(projectId as string);
+  }
+);
 </script>
 
 <template>
