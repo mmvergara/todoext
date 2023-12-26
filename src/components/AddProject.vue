@@ -12,6 +12,7 @@ const isAddingProject = ref(false);
 const toggleAddProject = () => (isAddingProject.value = !isAddingProject.value);
 const submitProject = async () => {
   try {
+    if(projectName.value.length === 0) return;
     if (user.value.data) {
       const id = await addProject(projectName.value, user.value.data.uid);
       emit("handle-add-project", {

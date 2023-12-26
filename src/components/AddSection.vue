@@ -11,6 +11,7 @@ const emit = defineEmits(["handle-section-add"]);
 const sectionName = ref("");
 const handleAddSection = async () => {
   try {
+    if(sectionName.value.length === 0) return;
     const res = await addSection(projectId, sectionName.value);
     emit("handle-section-add", res);
     toast.success("Section Added 🎉");
