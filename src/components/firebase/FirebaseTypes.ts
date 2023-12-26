@@ -33,4 +33,3 @@ export type Task = {
   taskName: string;
   createdAt: Timestamp;
 };
-

@@ -58,6 +58,13 @@ const completeTaskHandler = () => {
   border: 1px solid #323232;
   border-radius: 5px;
   padding: 10px;
+  /* drop shadow */
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.task:hover {
+  box-shadow: 0px 4px 4px rgba(29, 65, 82, 0.293);
 }
 
 .task:hover {

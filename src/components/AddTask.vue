@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const addTaskHandler = async () => {
-  if(taskName.value.length === 0) return;
+  if (taskName.value.length === 0) return;
   const res = await addTask(props.projectId, props.sectionId, taskName.value);
   emit("handle-task-add", res);
   taskName.value = "";
@@ -28,7 +28,7 @@ const addTaskHandler = async () => {
     <input
       class="add-task-input"
       type="text"
-      placeholder="Add New Task"
+      placeholder="+ Add Task"
       v-model="taskName"
     />
     <button v-if="taskName.length !== 0" class="add-task-btn" type="submit">
@@ -66,7 +66,7 @@ const addTaskHandler = async () => {
   padding: 10px;
   border-radius: 0.25rem;
   border: none;
-  width: 100%;
+  width: 302px;
   background-color: var(--dark-primary);
   border: 2px solid var(--dark-secondary);
   color: #fff;
@@ -75,5 +75,9 @@ const addTaskHandler = async () => {
 
 .add-task-btn:hover {
   background-color: var(--dark-secondary);
+}
+
+.blue {
+  color: var(--cyan-primary);
 }
 </style>

@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import {
+  deleteProject,
+  updateProjectName,
+} from "@/components/firebase/api/Projects";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 
 const router = useRouter();
-const projectId = router.currentRoute.value.params.id as string;
+const projectId = computed(() => router.currentRoute.value.params.id as string);
 const newProjectName = ref("");
 
 const handleDeleteProject = async () => {
   try {
-    // await deleteProject(projectid);
+    await deleteProject(projectId.value);
     toast.success("Project Deleted 🎉");
-    router.push("/");
+    window.location.href = `/`;
   } catch (error) {
     toast.error("Something went wrong 😢");
   }
@@ -19,8 +23,9 @@ const handleDeleteProject = async () => {
 
 const handleUpdateProjectName = async () => {
   try {
-    // await updateProjectName(projectid, projectName.value);
+    await updateProjectName(projectId.value, newProjectName.value);
     toast.success("Project Name Updated 🎉");
+    window.location.href = `/project/${projectId.value}`;
   } catch (error) {
     toast.error("Something went wrong 😢");
   }
