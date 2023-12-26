@@ -81,7 +81,7 @@ watch(
 /* Dark Mode Scroller */
 .project-section-container {
   flex-grow: 1;
-  padding: 0em 1em;
+  padding: 0em 2em;
   display: flex;
   flex-direction: row;
   overflow-x: auto;

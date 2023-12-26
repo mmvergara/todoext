@@ -39,7 +39,7 @@ const handleAddSection = async () => {
 
 <style scoped>
 .add-section-container {
-  width: 320px;
+  min-width: 320px;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid transparent;
