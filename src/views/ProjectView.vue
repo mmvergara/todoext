@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onBeforeRouteUpdate, useRouter } from "vue-router";
+import type { Project, Section } from "@/components/firebase/FirebaseTypes";
 import { watch, ref, onMounted } from "vue";
+import { getProjectSections } from "@/components/firebase/api/Sections";
 import { getProjectData } from "@/components/firebase/api/Projects";
+import { useRouter } from "vue-router";
 import ProjectSection from "@/components/Section.vue";
 import AddSection from "@/components/AddSection.vue";
-import type { Project, Section } from "@/components/firebase/FirebaseTypes";
-import { getProjectSections } from "@/components/firebase/api/Sections";
 
 const router = useRouter();
 const project = ref<Project | null>(null);
@@ -16,6 +16,7 @@ const handleSectionAdd = (section: Section) => {
 };
 
 const fetchProjectData = async (projectId: string) => {
+  console.log("fetching");
   try {
     const [projectData, projectSections] = await Promise.all([
       getProjectData(projectId),
@@ -31,11 +32,13 @@ const fetchProjectData = async (projectId: string) => {
   }
 };
 
+onMounted(() => {
+  fetchProjectData(router.currentRoute.value.params.id as string);
+});
+
 watch(
   () => router.currentRoute.value.params.id,
-  (projectId) => {
-    fetchProjectData(projectId as string);
-  }
+  (projectId) => fetchProjectData(projectId as string)
 );
 </script>
 

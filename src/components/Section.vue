@@ -2,10 +2,7 @@
 import EllipsisSvg from "@/components/icons/EllipsisSvg.vue";
 import Task from "@/components/Task.vue";
 import AddTask from "@/components/AddTask.vue";
-import type {
-  Section,
-  Task as TaskData,
-} from "@/components/firebase/FirebaseTypes";
+import type { Section } from "@/components/firebase/FirebaseTypes";
 import { ref, type PropType, onUnmounted } from "vue";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FirestoreMain } from "./firebase/Firebase";

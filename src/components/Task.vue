@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
 import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
-import { ref, type PropType } from "vue";
+import type { PropType } from "vue";
 import type { Task } from "./firebase/FirebaseTypes";
 import { deleteTask } from "./firebase/api/Tasks";
-
+import PopSound from "@/assets/sounds/pop.mp3";
+import { toast } from "vue3-toastify";
 const props = defineProps({
   taskData: {
     type: Object as PropType<Task>,
@@ -20,20 +21,23 @@ const props = defineProps({
   },
 });
 
-const audio = ref<HTMLAudioElement | null>(null);
 const completeTaskHandler = () => {
-  if (audio.value) {
-    audio.value.play();
+  const audio = new Audio(PopSound);
+  if (audio) {
+    audio.volume = 0.3;
+    audio.playbackRate = 0.8;
+    audio.play();
   }
+  toast.success("Task Completed! 🎉🎉🎉", {
+    position: "top-center",
+    autoClose: 1000,
+  });
   deleteTask(props.projectId, props.sectionId, props.taskData.taskId);
 };
 </script>
 <template>
   <div class="task">
     <div>
-      <audio hidden="true" ref="audio">
-        <source src="./pop-sound.mp3" type="audio/mpeg" />
-      </audio>
       <button class="complete-task-btn" @click="completeTaskHandler">
         <div class="CircleCheckHollow">
           <CircleCheckHollow />

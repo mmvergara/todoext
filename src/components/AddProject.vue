@@ -65,7 +65,7 @@ const submitProject = async () => {
 .project.btn {
   font-family: "Inter", sans-serif;
   font-size: 16px;
-  background-color: #1c1c1c74;
+  background-color: var(--gray-secondary);
   color: var(--gray-primary);
   border: none;
   text-align: left;
