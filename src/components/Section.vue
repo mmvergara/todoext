@@ -73,6 +73,7 @@ onUnmounted(() => {
 
 .padding {
   min-width: 10px;
+  max-width: 10px;
   height: 100%;
   flex: 1;
 }
