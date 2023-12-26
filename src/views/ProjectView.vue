@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import type { Project, Section } from "@/components/firebase/FirebaseTypes";
-import { watch, ref, onMounted } from "vue";
+import { watch, ref, onMounted, computed } from "vue";
 import { getProjectSections } from "@/components/firebase/api/Sections";
 import { getProjectData } from "@/components/firebase/api/Projects";
 import { useRouter } from "vue-router";
 import ProjectSection from "@/components/Section.vue";
 import AddSection from "@/components/AddSection.vue";
+import GearSvg from "@/components/icons/GearSvg.vue";
 
 const router = useRouter();
 const project = ref<Project | null>(null);
 const sections = ref<Section[]>([]);
 
-const handleSectionAdd = (section: Section) => {
-  sections.value.push(section);
-};
+const projectId = computed(() => router.currentRoute.value.params.id);
+
+const handleSectionAdd = (section: Section) => sections.value.push(section);
 
 const fetchProjectData = async (projectId: string) => {
   console.log("fetching");
@@ -43,17 +44,19 @@ watch(
 </script>
 
 <template>
+  <ProjectSettingsModal />
   <div v-if="project" class="project-main-container">
-    <h1 id="project-name">{{ project.projectName }}</h1>
-    <div class="project-container">
-      <div class="project-section-container">
-        <ProjectSection
-          v-for="section in sections"
-          :key="section.sectionId"
-          :section="section"
-        />
-        <AddSection @handle-section-add="handleSectionAdd" />
-      </div>
+    <div class="project-header">
+      <h1 id="project-name">{{ project.projectName }}</h1>
+      <RouterLink :to="`/project/${projectId}/settings`" class="project-settings-btn"><GearSvg /></RouterLink>
+    </div>
+    <div class="project-section-container">
+      <ProjectSection
+        v-for="section in sections"
+        :key="section.sectionId"
+        :section="section"
+      />
+      <AddSection @handle-section-add="handleSectionAdd" />
     </div>
   </div>
 </template>
@@ -64,13 +67,6 @@ watch(
   margin-bottom: 1em;
 }
 
-.project-container {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  height: 100%;
-}
-
 .project-main-container {
   display: flex;
   flex-direction: column;
@@ -78,7 +74,30 @@ watch(
   height: 100vh;
   overflow-x: hidden;
 }
-/* Dark Mode Scroller */
+
+.project-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 3em;
+}
+
+.project-settings-btn {
+  font-family: "Inter", sans-serif;
+  padding: 13px 14px 10px 14px;
+  border-radius: 0.25rem;
+  border: none;
+  border: 2px solid var(--dark-secondary);
+  background-color: var(--dark-primary);
+  color: white;
+  cursor: pointer;
+}
+
+.project-settings-btn:hover {
+  background-color: var(--dark-secondary);
+}
+
 .project-section-container {
   flex-grow: 1;
   padding: 0em 2em;
