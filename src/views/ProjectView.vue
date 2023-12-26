@@ -78,12 +78,13 @@ watch(
   height: 100vh;
   overflow-x: hidden;
 }
+/* Dark Mode Scroller */
 .project-section-container {
   flex-grow: 1;
   padding: 0em 1em;
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   height: 100%;
 }
 </style>
