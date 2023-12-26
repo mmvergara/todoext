@@ -43,15 +43,17 @@ watch(
 </script>
 
 <template>
-  <div v-if="project" class="project-container">
+  <div v-if="project" class="project-main-container">
     <h1 id="project-name">{{ project.projectName }}</h1>
-    <div class="project-section-container">
-      <ProjectSection
-        v-for="section in sections"
-        :key="section.sectionId"
-        :section="section"
-      />
-      <AddSection @handle-section-add="handleSectionAdd" />
+    <div class="project-container">
+      <div class="project-section-container">
+        <ProjectSection
+          v-for="section in sections"
+          :key="section.sectionId"
+          :section="section"
+        />
+        <AddSection @handle-section-add="handleSectionAdd" />
+      </div>
     </div>
   </div>
 </template>
@@ -61,14 +63,27 @@ watch(
   font-size: 1.5em;
   margin-bottom: 1em;
 }
+
 .project-container {
-  height: 100vh;
-  width: 100%;
-  padding: 2em;
-}
-.project-section-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.project-main-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.project-section-container {
+  flex-grow: 1;
+  padding: 0em 1em;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  height: 100%;
 }
 </style>

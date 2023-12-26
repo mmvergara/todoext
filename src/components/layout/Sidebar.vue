@@ -84,7 +84,6 @@ watchEffect(() => {
   font-family: "Inter", sans-serif;
   padding: 20px;
   background-color: var(--dark-secondary);
-  width: 320px;
   min-width: 320px;
   height: 100vh;
   box-shadow: 5px 0 20px rgba(0, 0, 0, 0.199);
@@ -92,6 +91,7 @@ watchEffect(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 .app-sidebar-nav {
   display: flex;

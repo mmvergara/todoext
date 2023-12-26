@@ -24,12 +24,11 @@ const props = defineProps({
 const completeTaskHandler = () => {
   const audio = new Audio(PopSound);
   if (audio) {
-    audio.volume = 0.3;
-    audio.playbackRate = 0.8;
+    audio.volume = 0.2;
+    audio.playbackRate = 1;
     audio.play();
   }
   toast.success("Task Completed! 🎉🎉🎉", {
-    position: "top-center",
     autoClose: 1000,
   });
   deleteTask(props.projectId, props.sectionId, props.taskData.taskId);

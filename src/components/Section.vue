@@ -59,6 +59,7 @@ onUnmounted(() => {
       <AddTask :project-id="projectId" :section-id="section.sectionId" />
     </div>
   </div>
+  <div class="padding"></div>
 </template>
 
 <style scoped>
@@ -69,9 +70,12 @@ onUnmounted(() => {
   border: 1px solid transparent;
   transition: border 0.2s ease-in-out;
 }
-/* .section-container:hover {
-  border: 1px solid #323232;
-} */
+
+.padding {
+  min-width: 10px;
+  height: 100%;
+  flex: 1;
+}
 
 .section-header {
   display: flex;
@@ -81,6 +85,7 @@ onUnmounted(() => {
   margin-bottom: 5px;
   padding-inline: 5px;
 }
+
 .section-name {
   font-family: "Inter", sans-serif;
   font-weight: bold;

@@ -25,6 +25,9 @@ input {
   font-family: "Inter", sans-serif;
 }
 
-body {
+body,
+html {
   background-color: var(--dark-primary);
+  height: 100vh;
+  width: 100vw;
 }
