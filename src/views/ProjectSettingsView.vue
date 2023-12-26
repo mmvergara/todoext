@@ -37,9 +37,10 @@ const handleUpdateProjectName = async () => {
     >
       <h2>Update Project Name</h2>
       <input
-        class="project-settings-input"
+        class="new-projectname-input"
+        data-cy="new-projectname-input"
         type="text"
-        placeholder="Project Name"
+        placeholder="New Project Name"
         v-model="newProjectName"
       />
       <button
@@ -81,16 +82,16 @@ h2 {
 }
 
 p {
-  color: var(--gray-primary);
+  color: var(--gray-secondary);
 }
 
 .update-projectname-form {
   margin-bottom: 20px;
 }
 
-.project-settings-input {
+.new-projectname-input {
   font-family: "Inter", sans-serif;
-  margin-bottom: 5px;
+  margin: 10px 0px;
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -104,14 +105,13 @@ p {
   padding: 10px;
   border-radius: 0.25rem;
   border: none;
-  width: 100%;
-  background-color: var(--dark-primary);
-  border: 2px solid var(--dark-secondary);
+  background-color: var(--cyan-third);
+  cursor: pointer;
   color: #fff;
 }
 
 .update-project-btn:hover {
-  background-color: #014858;
+  background-color: var(--cyan-secondary);
 }
 
 .delete-project-btn {
@@ -120,7 +120,6 @@ p {
   padding: 10px;
   border-radius: 0.25rem;
   border: none;
-  width: 100%;
   background-color: #bd4337;
   color: #fff;
   cursor: pointer;
@@ -132,9 +131,9 @@ p {
 
 .divider {
   width: 100%;
-  height: 2px;
+  height: 1px;
   background-color: #545454;
-  margin: 20px 0px;
+  margin: 40px 0px;
   border-radius: 50%;
 }
 </style>

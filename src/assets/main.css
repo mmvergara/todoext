@@ -19,6 +19,7 @@
   --dark-secondary: #272727;
   --logout-red: rgb(255, 130, 130);
   --gray-primary: #a0a0a0;
+  --gray-secondary: #878787;
 }
 
 input {
