@@ -20,7 +20,7 @@ const submitProject = async () => {
         name: projectName.value,
         path: `/project/${id}`,
       });
-      toast.success("Project Added 🎉");
+      toast.success("Project Added");
     }
     projectName.value = "";
     toggleAddProject();
@@ -31,7 +31,7 @@ const submitProject = async () => {
 </script>
 
 <template>
-  <button v-if="!isAddingProject" @click="toggleAddProject" class="project btn">
+  <button v-if="!isAddingProject" @click="toggleAddProject" class="toggle-add-project-btn">
     + Add Project
   </button>
   <form class="add-project-form" v-else @submit.prevent="submitProject">
@@ -63,18 +63,20 @@ const submitProject = async () => {
 </template>
 
 <style scoped>
-.project.btn {
+.toggle-add-project-btn {
   font-family: "Inter", sans-serif;
   font-size: 16px;
-  background-color: var(--gray-secondary);
+  background-color: var(--gray-third);
   color: var(--gray-primary);
   border: none;
   text-align: left;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.project.btn:hover {
+.toggle-add-project-btn:hover {
   background-color: #014858;
 }
 

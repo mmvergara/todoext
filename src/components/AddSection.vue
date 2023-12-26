@@ -11,10 +11,10 @@ const emit = defineEmits(["handle-section-add"]);
 const sectionName = ref("");
 const handleAddSection = async () => {
   try {
-    if(sectionName.value.length === 0) return;
+    if (sectionName.value.length === 0) return;
     const res = await addSection(projectId, sectionName.value);
     emit("handle-section-add", res);
-    toast.success("Section Added 🎉");
+    toast.success("Section Added");
   } catch (error) {
     toast.error("Something went wrong 😢");
   }
@@ -25,7 +25,7 @@ const handleAddSection = async () => {
     <input
       class="add-section-input"
       type="text"
-      placeholder="Add New Section"
+      placeholder="+ Add New Section"
       v-model="sectionName"
     />
     <button

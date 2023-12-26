@@ -28,8 +28,8 @@ const completeTaskHandler = () => {
     audio.playbackRate = 1;
     audio.play();
   }
-  toast.success("Task Completed! 🎉🎉🎉", {
-    autoClose: 1000,
+  toast.success("Task Completed! 🎉🎇🎉", {
+    autoClose: 1500,
   });
   deleteTask(props.projectId, props.sectionId, props.taskData.taskId);
 };

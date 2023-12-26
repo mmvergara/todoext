@@ -14,7 +14,7 @@ const newProjectName = ref("");
 const handleDeleteProject = async () => {
   try {
     await deleteProject(projectId.value);
-    toast.success("Project Deleted 🎉");
+    toast.success("Project Deleted");
     window.location.href = `/`;
   } catch (error) {
     toast.error("Something went wrong 😢");
@@ -24,7 +24,7 @@ const handleDeleteProject = async () => {
 const handleUpdateProjectName = async () => {
   try {
     await updateProjectName(projectId.value, newProjectName.value);
-    toast.success("Project Name Updated 🎉");
+    toast.success("Project Name Updated");
     window.location.href = `/project/${projectId.value}`;
   } catch (error) {
     toast.error("Something went wrong 😢");
