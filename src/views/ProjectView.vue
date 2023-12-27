@@ -48,7 +48,11 @@ watch(
   <div v-if="project" class="project-main-container">
     <div class="project-header">
       <h1 id="project-name">{{ project.projectName }}</h1>
-      <RouterLink :to="`/project/${projectId}/settings`" class="project-settings-btn"><GearSvg /></RouterLink>
+      <RouterLink
+        :to="`/project/${projectId}/settings`"
+        class="project-settings-btn"
+        ><GearSvg
+      /></RouterLink>
     </div>
     <div class="project-section-container">
       <ProjectSection
@@ -64,7 +68,6 @@ watch(
 <style scoped>
 #project-name {
   font-size: 1.5em;
-  margin-bottom: 1em;
 }
 
 .project-main-container {
@@ -80,15 +83,13 @@ watch(
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1em 3em;
+  padding: 2em 3em;
 }
 
 .project-settings-btn {
   font-family: "Inter", sans-serif;
   padding: 13px 14px 10px 14px;
   border-radius: 0.25rem;
-  border: none;
-  border: 2px solid var(--dark-secondary);
   background-color: var(--dark-primary);
   color: white;
   cursor: pointer;

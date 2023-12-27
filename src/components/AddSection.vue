@@ -15,6 +15,7 @@ const handleAddSection = async () => {
     const res = await addSection(projectId, sectionName.value);
     emit("handle-section-add", res);
     toast.success("Section Added");
+    sectionName.value = "";
   } catch (error) {
     toast.error("Something went wrong 😢");
   }
