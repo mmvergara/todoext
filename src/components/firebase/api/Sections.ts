@@ -3,7 +3,14 @@ import type {
   Section,
   SectionField,
 } from "@/components/firebase/FirebaseTypes";
-import { Timestamp, addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 
 export const getProjectSections = async (projectID: string) => {
   const docRef = collection(FirestoreMain, "projects", projectID, "sections");
@@ -20,6 +27,24 @@ export const getProjectSections = async (projectID: string) => {
     sections.push(section);
   });
   return sections;
+};
+
+export const updateSectionName = async (
+  projectId: string,
+  sectionId: string,
+  newSectionName: string
+) => {
+  const docRef = doc(
+    FirestoreMain,
+    "projects",
+    projectId,
+    "sections",
+    sectionId
+  );
+  const res = await updateDoc(docRef, {
+    sectionName: newSectionName,
+  });
+  console.log(res);
 };
 
 export const addSection = async (projectId: string, sectionName: string) => {
@@ -40,6 +65,4 @@ export const addSection = async (projectId: string, sectionName: string) => {
     sectionId: res.id,
   };
   return sectionRes;
-}; 
-
-
+};

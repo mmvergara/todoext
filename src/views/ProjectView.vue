@@ -44,7 +44,6 @@ watch(
 </script>
 
 <template>
-  <ProjectSettingsModal />
   <div v-if="project" class="project-main-container">
     <div class="project-header">
       <h1 id="project-name">{{ project.projectName }}</h1>
