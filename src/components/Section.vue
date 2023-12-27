@@ -36,8 +36,10 @@ const toggleSectionNameChange = () => {
 
 const handleChangeSectionName = async () => {
   if (changeNameInput.value === "") return;
-  if (changeNameInput.value === section.value.sectionName) return;
-  console.log("changing section name")
+  if (changeNameInput.value === section.value.sectionName) {
+    isChangingSectionName.value = false;
+    return;
+  }
   try {
     await updateSectionName(
       projectId.value,
@@ -92,7 +94,7 @@ onUnmounted(() => {
         <form @submit.prevent="handleChangeSectionName">
           <input
             ref="changeSectionNameInputRef"
-            class="section-name"
+            class="section-name section-name-change-input"
             v-model="changeNameInput"
             type="text"
             style="max-width: 230px"
@@ -172,6 +174,14 @@ onUnmounted(() => {
   font-size: 1.2em;
   cursor: pointer;
   padding: 3px;
+}
+
+.section-name-change-input {
+  background-color: var(--dark-secondary);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
 }
 
 .section-name:hover {
