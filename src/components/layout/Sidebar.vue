@@ -10,6 +10,13 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const user = computed(() => store.state.user);
+const quote = ref("");
+
+const fetchRandomQuote = async () => {
+  const response = await fetch("http://api.quotable.io/random?maxLength=80");
+  const data = await response.json();
+  quote.value = data.content;
+};
 const isLoading = ref(true);
 type ProjectLink = {
   id: string;
@@ -37,6 +44,7 @@ const fetchProjects = async () => {
     router.push(projectLinks.value[0].path);
   }
 };
+// http://api.quotable.io/random?maxLength=80
 
 const handleAddProject = async (project: ProjectLink) => {
   console.log(project);
@@ -46,6 +54,7 @@ const handleAddProject = async (project: ProjectLink) => {
 watchEffect(() => {
   console.log("updated");
   fetchProjects();
+  fetchRandomQuote();
 });
 </script>
 
@@ -73,9 +82,13 @@ watchEffect(() => {
         <AddProject @handle-add-project="handleAddProject" />
       </section>
     </div>
-    <button class="logout-btn" @click="store.dispatch('logOut')">
-      <LogoutSvg /> <span> Logout </span>
-    </button>
+    <div class="sidebar-footer">
+      <p class="quote">{{ quote }}</p>
+
+      <button class="logout-btn" @click="store.dispatch('logOut')">
+        <LogoutSvg /> <span> Logout </span>
+      </button>
+    </div>
   </nav>
 </template>
 
@@ -85,6 +98,7 @@ watchEffect(() => {
   padding: 20px;
   background-color: var(--dark-secondary);
   min-width: 320px;
+  max-width: 320px;
   height: 100vh;
   box-shadow: 5px 0 20px rgba(0, 0, 0, 0.199);
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
@@ -109,6 +123,7 @@ watchEffect(() => {
   cursor: pointer;
 }
 .logout-btn {
+  width: 100%;
   background-color: var(--dark-primary);
   color: var(--gray-primary);
   font-weight: bold;
@@ -175,5 +190,22 @@ watchEffect(() => {
   100% {
     opacity: 1;
   }
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.quote {
+  font-size: 0.8rem;
+  color: var(--gray-primary);
+  text-align: center;
+  font-style: italic;
+  text-wrap: wrap;
+  margin: 0;
+  padding: 0;
 }
 </style>
