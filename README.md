@@ -1,4 +1,4 @@
-# Todoext
+# Todoext (Beta)
 Lightweight clone of todoist.com
 
 ## Features
