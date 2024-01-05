@@ -33,7 +33,6 @@ const toggleSectionNameChange = () => {
   if (isChangingSectionName.value) {
     isChangingSectionName.value = false;
   } else {
-    console.log("is changing section name");
     isChangingSectionName.value = true;
     setTimeout(() => {
       changeSectionNameInputRef.value?.focus();
@@ -89,7 +88,6 @@ const unsub = onSnapshot(
 );
 
 onUnmounted(() => {
-  console.log("unsub");
   unsub();
 });
 </script>

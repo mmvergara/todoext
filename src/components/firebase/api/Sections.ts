@@ -45,7 +45,6 @@ export const updateSectionName = async (
   const res = await updateDoc(docRef, {
     sectionName: newSectionName,
   });
-  console.log(res);
 };
 
 export const addSection = async (projectId: string, sectionName: string) => {

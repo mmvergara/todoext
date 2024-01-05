@@ -3,8 +3,13 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-    <div>
-      <h1>Home</h1>
-      <RouterLink to="/auth">Auth</RouterLink>
-    </div>
+  <h1>Start Working!!!</h1>
 </template>
+
+<style scoped>
+h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 2em;
+  padding: 2em;
+}
+</style>

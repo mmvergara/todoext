@@ -13,7 +13,6 @@ const signInWithGoogle = async () => {
 
 const user = computed(() => store.state.user);
 if (user.value.loggedIn) {
-  console.log("Redirecting to home");
   router.push("/");
 }
 </script>

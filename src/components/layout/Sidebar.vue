@@ -51,12 +51,10 @@ const fetchProjects = async () => {
 // http://api.quotable.io/random?maxLength=80
 
 const handleAddProject = async (project: ProjectLink) => {
-  console.log(project);
   projectLinks.value.push(project);
 };
 
 watchEffect(() => {
-  console.log("updated");
   fetchProjects();
   fetchRandomQuote();
 });

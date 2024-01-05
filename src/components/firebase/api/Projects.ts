@@ -56,7 +56,6 @@ export const addProject = async (projectName: string, userID: string) => {
     createdAt: Timestamp.now(),
   };
   const docRef = await addDoc(projectRef, Project);
-  console.log(`%cCreate Project: ${projectName}`, "color: green;");
   return docRef.id;
 };
 

@@ -17,7 +17,6 @@ const projectId = computed(() => router.currentRoute.value.params.id);
 const handleSectionAdd = (section: Section) => sections.value.push(section);
 
 const fetchProjectData = async (projectId: string) => {
-  console.log("fetching");
   try {
     const [projectData, projectSections] = await Promise.all([
       getProjectData(projectId),
@@ -29,7 +28,7 @@ const fetchProjectData = async (projectId: string) => {
 
     if (projectSections) sections.value = projectSections;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -43,7 +42,6 @@ watch(
 );
 
 const handleDeleteSection = (sectionId: string) => {
-  console.log("From project view")
   sections.value = sections.value.filter(
     (section) => section.sectionId !== sectionId
   );
