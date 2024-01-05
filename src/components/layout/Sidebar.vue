@@ -26,19 +26,23 @@ type ProjectLink = {
 const projectLinks = ref<ProjectLink[]>([]);
 
 const fetchProjects = async () => {
-  if (user.value.data) {
-    isLoading.value = true;
-    const projects = await getProjects();
-    projects.forEach((project) => {
-      projectLinks.value.push({
-        id: project.projectId,
-        name: project.projectName,
-        path: `/project/${project.projectId}`,
+  isLoading.value = true;
+  try {
+    if (user.value.data) {
+      const projects = await getProjects();
+      projects.forEach((project) => {
+        projectLinks.value.push({
+          id: project.projectId,
+          name: project.projectName,
+          path: `/project/${project.projectId}`,
+        });
       });
-    });
-    isLoading.value = false;
+    }
+  } catch (error) {
+    console.log(error);
   }
 
+  isLoading.value = false;
   //  Redirect to first project if no project is selected
   if (projectLinks.value.length > 0 && route.fullPath === "/") {
     router.push(projectLinks.value[0].path);

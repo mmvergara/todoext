@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "mmv-todoext",
   storageBucket: "mmv-todoext.appspot.com",
   messagingSenderId: "652738202589",
-  appId: "1:652738202589:web:ca4b8dbf4618212e794434",
+  appId: "1:652738202589:web:aa4ccc97ff7081cd794434",
 };
 
 export const FirebaseApp = initializeApp(firebaseConfig);
