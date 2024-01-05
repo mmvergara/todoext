@@ -4,7 +4,10 @@ import Task from "@/components/Task.vue";
 import AddTask from "@/components/AddTask.vue";
 import type { Section } from "@/components/firebase/FirebaseTypes";
 import { ref, type PropType, onUnmounted, computed } from "vue";
-import { updateSectionName } from "@/components/firebase/api/Sections";
+import {
+  deleteSection,
+  updateSectionName,
+} from "@/components/firebase/api/Sections";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FirestoreMain } from "./firebase/Firebase";
 import { useRouter } from "vue-router";
@@ -12,6 +15,10 @@ import { toast } from "vue3-toastify";
 const props = defineProps({
   section: {
     type: Object as PropType<Section>,
+    required: true,
+  },
+  onDeleteSection: {
+    type: Function as PropType<(sectionId: string) => void>,
     required: true,
   },
 });
@@ -54,8 +61,15 @@ const handleChangeSectionName = async () => {
   }
 };
 
-const handleDeleteSection = () => {
-  router.push("/");
+const handleDeleteSection = async () => {
+  try {
+    await deleteSection(projectId.value, section.value.sectionId);
+    props.onDeleteSection(section.value.sectionId);
+    toast.success("Section Deleted");
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong 😢");
+  }
 };
 
 const unsub = onSnapshot(

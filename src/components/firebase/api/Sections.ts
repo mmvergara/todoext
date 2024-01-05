@@ -7,6 +7,7 @@ import {
   Timestamp,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   updateDoc,
@@ -65,4 +66,15 @@ export const addSection = async (projectId: string, sectionName: string) => {
     sectionId: res.id,
   };
   return sectionRes;
+};
+
+export const deleteSection = async (projectId: string, sectionId: string) => {
+  const sectionDocRef = doc(
+    FirestoreMain,
+    "projects",
+    projectId,
+    "sections",
+    sectionId
+  );
+  await deleteDoc(sectionDocRef);
 };

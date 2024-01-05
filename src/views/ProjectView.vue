@@ -41,6 +41,13 @@ watch(
   () => router.currentRoute.value.params.id,
   (projectId) => fetchProjectData(projectId as string)
 );
+
+const handleDeleteSection = (sectionId: string) => {
+  console.log("From project view")
+  sections.value = sections.value.filter(
+    (section) => section.sectionId !== sectionId
+  );
+};
 </script>
 
 <template>
@@ -58,6 +65,7 @@ watch(
         v-for="section in sections"
         :key="section.sectionId"
         :section="section"
+        @delete-section="handleDeleteSection"
       />
       <AddSection @handle-section-add="handleSectionAdd" />
     </div>
