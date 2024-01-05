@@ -29,7 +29,7 @@ const fetchProjects = async () => {
   isLoading.value = true;
   try {
     if (user.value.data) {
-      const projects = await getProjects();
+      const projects = await getProjects(user.value.data.uid);
       projects.forEach((project) => {
         projectLinks.value.push({
           id: project.projectId,
