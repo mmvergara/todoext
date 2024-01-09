@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { addTask } from "./firebase/api/Tasks";
+import { toast } from "vue3-toastify";
 
 const taskName = ref("");
 const emit = defineEmits(["handle-task-add"]);
@@ -17,9 +18,16 @@ const props = defineProps({
 
 const addTaskHandler = async () => {
   if (taskName.value.length === 0) return;
-  const res = await addTask(props.projectId, props.sectionId, taskName.value);
-  emit("handle-task-add", res);
-  taskName.value = "";
+  const lastTaskName = taskName.value;
+  try {
+    taskName.value = "";
+    const res = await addTask(props.projectId, props.sectionId, taskName.value);
+    emit("handle-task-add", res);
+  } catch (error) {
+    taskName.value = lastTaskName;
+    toast.error("Something went wrong");
+    console.log(error);
+  }
 };
 </script>
 
