@@ -15,11 +15,8 @@ import type { Project, ProjectField } from "../FirebaseTypes";
 
 const projectRef = collection(FirestoreMain, "projects");
 
-export const getProjects = async (userId:string) => {
-  const q = query(
-    projectRef,
-    where("ownerId", "==", "wYEgMuYQ5cNENlu2g6WzzhoZZ5g2")
-  );
+export const getProjects = async (userId: string) => {
+  const q = query(projectRef, where("ownerId", "==", userId));
   const querySnapshot = await getDocs(q);
   const projects: Project[] = [];
   querySnapshot.forEach((doc) => {
