@@ -24,6 +24,7 @@ export const getProjects = async (userId: string) => {
     const project: Project = {
       projectId: doc.id,
       projectName: data.projectName,
+      projectKey: data.projectKey,
       ownerId: data.ownerId,
       collaborators: data.collaborators,
       createdAt: data.createdAt,
@@ -46,6 +47,7 @@ export const getProjectData = async (projectID: string) => {
 export const addProject = async (projectName: string, userID: string) => {
   const Project: ProjectField = {
     projectName,
+    projectKey: generateProjectKey(projectName),
     ownerId: userID,
     collaborators: {
       [userID]: "owner",

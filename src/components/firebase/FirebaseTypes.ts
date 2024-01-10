@@ -3,6 +3,7 @@ import type { Timestamp } from "firebase/firestore";
 export type Project = {
   projectId: string;
   projectName: string;
+  projectKey:string;
   ownerId: string;
   collaborators: { [key: string]: string };
   createdAt: Timestamp;
@@ -10,6 +11,7 @@ export type Project = {
 
 export type ProjectField = {
   projectName: string;
+  projectKey: string;
   ownerId: string;
   collaborators: { [key: string]: string };
   createdAt: Timestamp;

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Project } from "@/components/firebase/FirebaseTypes";
 import {
   deleteProject,
   updateProjectName,
@@ -10,6 +11,8 @@ import { toast } from "vue3-toastify";
 const router = useRouter();
 const projectId = computed(() => router.currentRoute.value.params.id as string);
 const newProjectName = ref("");
+
+const projectData =ref<Project|null>(null);
 
 const handleDeleteProject = async () => {
   try {
