@@ -68,6 +68,16 @@ export const updateProjectName = async (
   });
 };
 
+export const updateProjectKey = async (
+  projectId: string,
+  projectName: string
+) => {
+  const docRef = doc(FirestoreMain, "projects", projectId);
+  await updateDoc(docRef, {
+    projectKey: generateProjectKey(projectName),
+  });
+};
+
 export const deleteProject = async (projectID: string) => {
   const docRef = doc(FirestoreMain, "projects", projectID);
   await deleteDoc(docRef);
