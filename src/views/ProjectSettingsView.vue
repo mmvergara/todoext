@@ -3,16 +3,20 @@ import type { Project } from "@/components/firebase/FirebaseTypes";
 import {
   deleteProject,
   updateProjectName,
+  updateProjectKey,
+  getProjectData,
 } from "@/components/firebase/api/Projects";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
-
+import { generateProjectKey } from "@/utils/helpers";
 const router = useRouter();
+const revealProjectKey = ref(false);
 const projectId = computed(() => router.currentRoute.value.params.id as string);
 const newProjectName = ref("");
+const isGeneratingNewProjectKey = ref(false);
 
-const projectData =ref<Project|null>(null);
+const project = ref<Project | null>(null);
 
 const handleDeleteProject = async () => {
   try {
@@ -33,11 +37,80 @@ const handleUpdateProjectName = async () => {
     toast.error("Something went wrong 😢");
   }
 };
+
+const handleGenerateNewProjectKey = async () => {
+  if (!project.value) return;
+  try {
+    isGeneratingNewProjectKey.value = true;
+    const newProjectKey = generateProjectKey(project.value?.projectName);
+    await updateProjectKey(projectId.value, newProjectKey);
+    isGeneratingNewProjectKey.value = false;
+    project.value.projectKey = newProjectKey;
+    toast.success("Project Key Updated");
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong 😢");
+  }
+};
+
+const handleRevealProjectKey = () => {
+  revealProjectKey.value = !revealProjectKey.value;
+};
+
+const fetchProjectData = async (projectId: string) => {
+  try {
+    const projectData = await getProjectData(projectId);
+    // if there is no such project with the given id, redirect to home
+    if (projectData) project.value = projectData;
+    else router.push("/");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+onMounted(() => {
+  fetchProjectData(router.currentRoute.value.params.id as string);
+});
+
+watch(
+  () => router.currentRoute.value.params.id,
+  (projectId) => fetchProjectData(projectId as string)
+);
 </script>
 
 <template>
   <div class="project-settings-container">
     <h1>Project Settings | {{ projectId }}</h1>
+    <div class="divider"></div>
+    <h2>Project Key</h2>
+    <p>
+      sharing this key means you are sharing this project to those who have it
+    </p>
+    <button
+      v-if="!revealProjectKey"
+      v-on:click="handleRevealProjectKey"
+      type="button"
+      class="reveal-project-key-btn"
+      data-cy="reveal-project-key-btn"
+    >
+      {{ "Reveal Project Key" }}
+    </button>
+    <p v-else class="project-key-btn" data-cy="project-key-btn">
+      {{ isGeneratingNewProjectKey ? "....." : project?.projectKey }}
+    </p>
+    <button
+      v-on:click="handleGenerateNewProjectKey"
+      :disabled="isGeneratingNewProjectKey"
+      type="button"
+      class="generate-new-project-key-btn"
+      data-cy="generate-new-project-key-btn"
+    >
+      {{
+        isGeneratingNewProjectKey
+          ? "Generating New Project Key..."
+          : "Generate New Project Key"
+      }}
+    </button>
     <div class="divider"></div>
     <form
       class="update-projectname-form"
@@ -135,6 +208,31 @@ p {
 
 .delete-project-btn:hover {
   background-color: hsl(5, 55%, 50%);
+}
+
+.reveal-project-key-btn,
+.project-key-btn {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  padding: 10px;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: var(--dark-secondary);
+  cursor: pointer;
+  color: #fff;
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.generate-new-project-key-btn {
+  font-family: "Inter", sans-serif;
+  padding: 10px;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: var(--cyan-third);
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
 }
 
 .divider {

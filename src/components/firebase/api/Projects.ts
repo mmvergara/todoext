@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
 import type { Project, ProjectField } from "../FirebaseTypes";
+import { generateProjectKey } from "@/utils/helpers";
 
 const projectRef = collection(FirestoreMain, "projects");
 
@@ -70,11 +71,11 @@ export const updateProjectName = async (
 
 export const updateProjectKey = async (
   projectId: string,
-  projectName: string
+  newProjectKey: string
 ) => {
   const docRef = doc(FirestoreMain, "projects", projectId);
   await updateDoc(docRef, {
-    projectKey: generateProjectKey(projectName),
+    projectKey: newProjectKey,
   });
 };
 
