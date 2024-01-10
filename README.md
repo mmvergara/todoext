@@ -8,6 +8,11 @@ Lightweight clone of todoist.com
 ## Installation
 - clone project 
 - go to /src/components/firebase/Firebase.ts and add your firebase config
+- 
+- 
+-
+- 
+- 
 ```
 npm install
 npm run dev

@@ -19,9 +19,9 @@ const props = defineProps({
 const addTaskHandler = async () => {
   if (taskName.value.length === 0) return;
   const lastTaskName = taskName.value;
+  taskName.value = "";
   try {
-    taskName.value = "";
-    const res = await addTask(props.projectId, props.sectionId, taskName.value);
+    const res = await addTask(props.projectId, props.sectionId, lastTaskName);
     emit("handle-task-add", res);
   } catch (error) {
     taskName.value = lastTaskName;
