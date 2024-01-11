@@ -3,23 +3,6 @@ import type { Section } from "@/components/firebase/FirebaseTypes";
 import { generateSectionId } from "@/utils/helpers";
 import { Timestamp, deleteField, doc, updateDoc } from "firebase/firestore";
 
-// export const getProjectSections = async (projectID: string) => {
-//   const docRef = collection(FirestoreMain, "projects", projectID, "sections");
-//   const docsSnap = await getDocs(docRef);
-//   const sections: Section[] = [];
-//   docsSnap.forEach((doc) => {
-//     const data = doc.data();
-//     const section: Section = {
-//       sectionId: doc.id,
-//       sectionName: data.sectionName,
-//       tasks: data.tasks,
-//       createdAt: data.createdAt,
-//     };
-//     sections.push(section);
-//   });
-//   return sections;
-// };
-
 export const updateSectionName = async (
   projectId: string,
   sectionId: string,

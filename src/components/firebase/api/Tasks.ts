@@ -1,13 +1,6 @@
-import {
-  Timestamp,
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { Timestamp, arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
-import type { Section, Task } from "../FirebaseTypes";
+import type { Task } from "../FirebaseTypes";
 
 export const addTask = async (
   projectID: string,

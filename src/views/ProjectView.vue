@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Project, Section } from "@/components/firebase/FirebaseTypes";
+import type { Project } from "@/components/firebase/FirebaseTypes";
 import { watch, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import ProjectSection from "@/components/Section.vue";
