@@ -34,6 +34,7 @@ const handleUpdateProjectName = async () => {
     toast.success("Project Name Updated");
     window.location.href = `/project/${projectId.value}`;
   } catch (error) {
+    console.log(error)
     toast.error("Something went wrong 😢");
   }
 };

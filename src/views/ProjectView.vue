@@ -8,7 +8,6 @@ import GearSvg from "@/components/icons/GearSvg.vue";
 import type { Unsubscribe } from "firebase/firestore";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FirestoreMain } from "@/components/firebase/Firebase";
-import { updateSectionName } from "@/components/firebase/api/Sections";
 
 const router = useRouter();
 const project = ref<Project | null>(null);
@@ -24,7 +23,6 @@ const projectId = computed(() => router.currentRoute.value.params.id);
 const unsub = ref<Unsubscribe>(
   onSnapshot(doc(FirestoreMain, `projects/${projectId.value}`), (doc) => {
     project.value = doc.data() as Project;
-    console.log(project.value);
   })
 );
 
