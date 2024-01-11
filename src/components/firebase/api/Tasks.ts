@@ -1,4 +1,10 @@
-import { Timestamp, arrayRemove, doc, updateDoc } from "firebase/firestore";
+import {
+  Timestamp,
+  arrayRemove,
+  deleteField,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
 import type { Task } from "../FirebaseTypes";
 
@@ -27,6 +33,6 @@ export const deleteTask = async (
 ) => {
   const projectRef = doc(FirestoreMain, "projects", projectId);
   updateDoc(projectRef, {
-    [`sections.${sectionId}.tasks`]: arrayRemove(taskId),
+    [`sections.${sectionId}.tasks.${taskId}`]: deleteField(),
   });
 };
