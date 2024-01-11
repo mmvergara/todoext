@@ -19,19 +19,28 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  taskId: {
+    type: String,
+    required: true,
+  },
 });
 
-const completeTaskHandler = () => {
+const completeTaskHandler = async () => {
   const audio = new Audio(PopSound);
-  if (audio) {
-    audio.volume = 0.2;
-    audio.playbackRate = 1;
-    audio.play();
+  try {
+    await deleteTask(props.projectId, props.sectionId, props.taskId);
+    if (audio) {
+      audio.volume = 0.2;
+      audio.playbackRate = 1;
+      audio.play();
+    }
+    toast.success("Task Completed! 🎉🎇🎉", {
+      autoClose: 1500,
+    });
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong 😢");
   }
-  toast.success("Task Completed! 🎉🎇🎉", {
-    autoClose: 1500,
-  });
-  deleteTask(props.projectId, props.sectionId, props.taskData.taskId);
 };
 </script>
 <template>

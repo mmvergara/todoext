@@ -17,6 +17,7 @@ const handleAddSection = async () => {
     toast.success("Section Added");
     sectionName.value = "";
   } catch (error) {
+    console.log(error)
     toast.error("Something went wrong 😢");
   }
 };

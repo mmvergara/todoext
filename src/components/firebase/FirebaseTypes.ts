@@ -3,10 +3,13 @@ import type { Timestamp } from "firebase/firestore";
 export type Project = {
   projectId: string;
   projectName: string;
-  projectKey:string;
+  projectKey: string;
   ownerId: string;
   collaborators: { [key: string]: string };
   createdAt: Timestamp;
+  sections: {
+    [key: string]: Section;
+  };
 };
 
 export type ProjectField = {
@@ -14,24 +17,21 @@ export type ProjectField = {
   projectKey: string;
   ownerId: string;
   collaborators: { [key: string]: string };
+  sections: {
+    [key: string]: Section;
+  };
   createdAt: Timestamp;
 };
 
 export type Section = {
-  sectionId: string;
   sectionName: string;
-  tasks: Task[];
-  createdAt: Timestamp;
-};
-
-export type SectionField = {
-  sectionName: string;
-  tasks: Task[];
+  tasks: {
+    [key: string]: Task;
+  };
   createdAt: Timestamp;
 };
 
 export type Task = {
-  taskId: string;
   taskName: string;
   createdAt: Timestamp;
 };

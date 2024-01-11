@@ -29,6 +29,7 @@ export const getProjects = async (userId: string) => {
       ownerId: data.ownerId,
       collaborators: data.collaborators,
       createdAt: data.createdAt,
+      sections: data.sections,
     };
     projects.push(project);
   });
@@ -50,6 +51,7 @@ export const addProject = async (projectName: string, userID: string) => {
     projectName,
     projectKey: generateProjectKey(projectName),
     ownerId: userID,
+    sections: {},
     collaborators: {
       [userID]: "owner",
     },

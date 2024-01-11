@@ -1,51 +1,45 @@
 <script setup lang="ts">
 import type { Project, Section } from "@/components/firebase/FirebaseTypes";
-import { watch, ref, onMounted, computed } from "vue";
-import { getProjectSections } from "@/components/firebase/api/Sections";
-import { getProjectData } from "@/components/firebase/api/Projects";
+import { watch, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import ProjectSection from "@/components/Section.vue";
 import AddSection from "@/components/AddSection.vue";
 import GearSvg from "@/components/icons/GearSvg.vue";
+import type { Unsubscribe } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
+import { FirestoreMain } from "@/components/firebase/Firebase";
+import { updateSectionName } from "@/components/firebase/api/Sections";
 
 const router = useRouter();
 const project = ref<Project | null>(null);
-const sections = ref<Section[]>([]);
-
+const projectSections = computed(() => {
+  // Sort by createdAt
+  const sections = Object.entries(project.value?.sections || {}).sort(
+    (a, b) => a[1].createdAt.seconds - b[1].createdAt.seconds
+  );
+  return sections;
+});
 const projectId = computed(() => router.currentRoute.value.params.id);
 
-const handleSectionAdd = (section: Section) => sections.value.push(section);
-
-const fetchProjectData = async (projectId: string) => {
-  try {
-    const [projectData, projectSections] = await Promise.all([
-      getProjectData(projectId),
-      getProjectSections(projectId),
-    ]);
-    // if there is no such project with the given id, redirect to home
-    if (projectData) project.value = projectData;
-    else router.push("/");
-
-    if (projectSections) sections.value = projectSections;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-onMounted(() => {
-  fetchProjectData(router.currentRoute.value.params.id as string);
-});
+const unsub = ref<Unsubscribe>(
+  onSnapshot(doc(FirestoreMain, `projects/${projectId.value}`), (doc) => {
+    project.value = doc.data() as Project;
+    console.log(project.value);
+  })
+);
 
 watch(
   () => router.currentRoute.value.params.id,
-  (projectId) => fetchProjectData(projectId as string)
+  (projectId) => {
+    unsub.value();
+    unsub.value = onSnapshot(
+      doc(FirestoreMain, `projects/${projectId}`),
+      (doc) => {
+        project.value = doc.data() as Project;
+      }
+    );
+  }
 );
-
-const handleDeleteSection = (sectionId: string) => {
-  sections.value = sections.value.filter(
-    (section) => section.sectionId !== sectionId
-  );
-};
 </script>
 
 <template>
@@ -60,12 +54,12 @@ const handleDeleteSection = (sectionId: string) => {
     </div>
     <div class="project-section-container">
       <ProjectSection
-        v-for="section in sections"
-        :key="section.sectionId"
+        v-for="[sectionId, section] of projectSections"
+        :key="sectionId"
+        :section-id="String(sectionId)"
         :section="section"
-        @delete-section="handleDeleteSection"
       />
-      <AddSection @handle-section-add="handleSectionAdd" />
+      <AddSection />
     </div>
   </div>
 </template>

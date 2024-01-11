@@ -25,3 +25,14 @@ export const generateProjectKey = (projectName: string) => {
 
   return projectKey;
 };
+
+export const generateSectionId = () => {
+  let sectionId = "";
+  const randomChars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const date = new Date();
+  const time = date.getTime();
+  for (let i = 0; i < 8; i++) {
+    sectionId += randomChars.charAt(Math.floor((time / Math.pow(36, i)) % 36));
+  }
+  return sectionId;
+};

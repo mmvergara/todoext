@@ -3,13 +3,11 @@ import EllipsisSvg from "@/components/icons/EllipsisSvg.vue";
 import Task from "@/components/Task.vue";
 import AddTask from "@/components/AddTask.vue";
 import type { Section } from "@/components/firebase/FirebaseTypes";
-import { ref, type PropType, onUnmounted, computed } from "vue";
+import { ref, type PropType, computed } from "vue";
 import {
   deleteSection,
   updateSectionName,
 } from "@/components/firebase/api/Sections";
-import { doc, onSnapshot } from "firebase/firestore";
-import { FirestoreMain } from "./firebase/Firebase";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 const props = defineProps({
@@ -17,18 +15,22 @@ const props = defineProps({
     type: Object as PropType<Section>,
     required: true,
   },
-  onDeleteSection: {
-    type: Function as PropType<(sectionId: string) => void>,
+  sectionId: {
+    type: String,
     required: true,
   },
 });
 const router = useRouter();
-const section = ref<Section>(props.section);
-const changeNameInput = ref(section.value.sectionName);
+const changeNameInput = ref(props.section.sectionName);
 const isChangingSectionName = ref(false);
 const changeSectionNameInputRef = ref<HTMLInputElement | null>(null);
 const projectId = computed(() => router.currentRoute.value.params.id as string);
-
+const sectionTasks = computed(() => {
+  const tasks = Object.entries(props.section.tasks).sort(
+    (a, b) => a[1].createdAt.seconds - b[1].createdAt.seconds
+  );
+  return tasks;
+});
 const toggleSectionNameChange = () => {
   if (isChangingSectionName.value) {
     isChangingSectionName.value = false;
@@ -42,14 +44,14 @@ const toggleSectionNameChange = () => {
 
 const handleChangeSectionName = async () => {
   if (changeNameInput.value === "") return;
-  if (changeNameInput.value === section.value.sectionName) {
+  if (changeNameInput.value === props.section.sectionName) {
     isChangingSectionName.value = false;
     return;
   }
   try {
     await updateSectionName(
       projectId.value,
-      section.value.sectionId,
+      props.sectionId,
       changeNameInput.value
     );
     isChangingSectionName.value = false;
@@ -62,34 +64,13 @@ const handleChangeSectionName = async () => {
 
 const handleDeleteSection = async () => {
   try {
-    await deleteSection(projectId.value, section.value.sectionId);
-    props.onDeleteSection(section.value.sectionId);
+    await deleteSection(projectId.value, props.sectionId);
     toast.success("Section Deleted");
   } catch (error) {
     console.log(error);
     toast.error("Something went wrong 😢");
   }
 };
-
-const unsub = onSnapshot(
-  doc(
-    FirestoreMain,
-    "projects",
-    projectId.value,
-    "sections",
-    props.section.sectionId
-  ),
-  (doc) => {
-    let data = doc.data() as Section | undefined;
-    if (!data) return;
-    data.sectionId = doc.id;
-    section.value = data;
-  }
-);
-
-onUnmounted(() => {
-  unsub();
-});
 </script>
 <template>
   <div class="section-container">
@@ -141,13 +122,14 @@ onUnmounted(() => {
     </div>
     <div class="section-task-container">
       <Task
-        v-for="task in section.tasks"
-        :key="task.taskId"
+        v-for="[taskId, task] in sectionTasks"
+        :key="taskId"
+        :task-id="taskId"
         :task-data="task"
         :project-id="projectId"
-        :section-id="section.sectionId"
+        :section-id="props.sectionId"
       />
-      <AddTask :project-id="projectId" :section-id="section.sectionId" />
+      <AddTask :project-id="projectId" :section-id="props.sectionId" />
     </div>
   </div>
   <div class="padding"></div>
