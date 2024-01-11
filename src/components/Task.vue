@@ -2,6 +2,7 @@
 import CircleCheckHollow from "@/components/icons/CircleCheckHollow.vue";
 import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
 import type { PropType } from "vue";
+import { ref } from "vue";
 import type { Task } from "./firebase/FirebaseTypes";
 import { deleteTask } from "./firebase/api/Tasks";
 import PopSound from "@/assets/sounds/pop.mp3";
@@ -24,6 +25,23 @@ const props = defineProps({
     required: true,
   },
 });
+const isChangingTaskName = ref(false);
+const changeTaskNameInput = ref(props.taskData.taskName);
+const changeTaskNameInputRef = ref<HTMLInputElement | null>(null);
+
+const toggleIsChangingTaskName = () => {
+  if (isChangingTaskName.value) {
+    isChangingTaskName.value = false;
+    changeTaskNameInput.value = props.taskData.taskName;
+  } else {
+    isChangingTaskName.value = true;
+    setTimeout(() => {
+      changeTaskNameInputRef.value?.focus();
+    }, 0);
+  }
+};
+
+const handleChangeTaskName = async () => {};
 
 const completeTaskHandler = async () => {
   const audio = new Audio(PopSound);
@@ -55,7 +73,23 @@ const completeTaskHandler = async () => {
         </div>
       </button>
     </div>
-    <p class="task-name">{{ props.taskData.taskName }}</p>
+    <button
+      v-if="!isChangingTaskName"
+      @click="toggleIsChangingTaskName"
+      class="task-name"
+      data-cy="task-name"
+    >
+      {{ props.taskData.taskName }}
+    </button>
+    <form v-else @submit.prevent="handleChangeTaskName">
+      <input
+        class="change-task-name-input"
+        ref="changeTaskNameInputRef"
+        @blur="toggleIsChangingTaskName"
+        type="text"
+        :value="changeTaskNameInput"
+      />
+    </form>
   </div>
 </template>
 
@@ -108,7 +142,34 @@ const completeTaskHandler = async () => {
 }
 
 .task-name {
-  margin-top: 1px;
-  margin-left: 2px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Apple Color Emoji", Helvetica, Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.task-name:hover {
+  text-decoration: underline;
+  border-radius: 5px;
+}
+
+.change-task-name-input {
+  width: 100%;
+  background-color: var(--dark-primary);
+  border: none;
+  border-radius: 2px;
+  padding: 5px;
+  outline: none;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Apple Color Emoji", Helvetica, Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-size: 16px;
 }
 </style>

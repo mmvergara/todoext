@@ -27,13 +27,15 @@ const changeSectionNameInputRef = ref<HTMLInputElement | null>(null);
 const projectId = computed(() => router.currentRoute.value.params.id as string);
 const sectionTasks = computed(() => {
   const tasks = Object.entries(props.section.tasks).sort(
-    (a, b) => a[1].createdAt.seconds - b[1].createdAt.seconds
+    (a, b) =>
+      a[1].createdAt.toDate().getTime() - b[1].createdAt.toDate().getTime()
   );
   return tasks;
 });
 const toggleSectionNameChange = () => {
   if (isChangingSectionName.value) {
     isChangingSectionName.value = false;
+    changeNameInput.value = props.section.sectionName;
   } else {
     isChangingSectionName.value = true;
     setTimeout(() => {
@@ -89,6 +91,7 @@ const handleDeleteSection = async () => {
             ref="changeSectionNameInputRef"
             class="section-name section-name-change-input"
             v-model="changeNameInput"
+            @blur="toggleSectionNameChange"
             type="text"
             style="max-width: 230px"
           />
