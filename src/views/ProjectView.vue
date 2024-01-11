@@ -14,8 +14,10 @@ const project = ref<Project | null>(null);
 const projectSections = computed(() => {
   // Sort by createdAt
   const sections = Object.entries(project.value?.sections || {}).sort(
-    (a, b) => a[1].createdAt.seconds - b[1].createdAt.seconds
+    (a, b) =>
+      a[1].createdAt.toDate().getTime() - b[1].createdAt.toDate().getTime()
   );
+  console.log(sections);
   return sections;
 });
 const projectId = computed(() => router.currentRoute.value.params.id);
