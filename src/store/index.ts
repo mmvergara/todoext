@@ -41,7 +41,6 @@ export const store = createStore<RootState>({
 
     async logInWithGoogle() {},
     async fetchUser(context, user) {
-      console.log("fecthUser");
       context.commit("SET_LOGGED_IN", user !== null);
       if (user) {
         context.commit("SET_USER", {
