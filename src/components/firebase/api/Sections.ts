@@ -10,9 +10,7 @@ export const updateSectionName = async (
 ) => {
   const projectRef = doc(FirestoreMain, "projects", projectId);
   await updateDoc(projectRef, {
-    [`sections.${sectionId}`]: {
-      sectionName: newSectionName,
-    },
+    [`sections.${sectionId}.sectionName`]: newSectionName,
   });
 };
 

@@ -91,7 +91,6 @@ const handleDeleteSection = async () => {
             ref="changeSectionNameInputRef"
             class="section-name section-name-change-input"
             v-model="changeNameInput"
-            @blur="toggleSectionNameChange"
             type="text"
             style="max-width: 230px"
           />

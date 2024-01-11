@@ -10,13 +10,15 @@ const emit = defineEmits(["handle-section-add"]);
 
 const sectionName = ref("");
 const handleAddSection = async () => {
+  const lastSectionName = sectionName.value.trim();
   try {
     if (sectionName.value.length === 0) return;
-    const res = await addSection(projectId.value, sectionName.value);
+    sectionName.value = "";
+    const res = await addSection(projectId.value, lastSectionName);
     emit("handle-section-add", res);
     toast.success("Section Added");
-    sectionName.value = "";
   } catch (error) {
+    sectionName.value = lastSectionName;
     console.log(error);
     toast.error("Something went wrong 😢");
   }
