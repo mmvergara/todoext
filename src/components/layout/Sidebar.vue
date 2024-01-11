@@ -13,9 +13,13 @@ const user = computed(() => store.state.user);
 const quote = ref("");
 
 const fetchRandomQuote = async () => {
-  const response = await fetch("http://api.quotable.io/random?maxLength=80");
-  const data = await response.json();
-  quote.value = data.content;
+  try {
+    const response = await fetch("http://api.quotable.io/random?maxLength=80");
+    const data = await response.json();
+    quote.value = data.content;
+  } catch (error) {
+    console.log(error);
+  }
 };
 const isLoading = ref(true);
 type ProjectLink = {
