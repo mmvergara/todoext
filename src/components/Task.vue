@@ -4,7 +4,7 @@ import CircleCheckFilled from "@/components/icons/CircleCheckFilled.vue";
 import type { PropType } from "vue";
 import { ref } from "vue";
 import type { Task } from "./firebase/FirebaseTypes";
-import { deleteTask } from "./firebase/api/Tasks";
+import { deleteTask, updateTaskName } from "./firebase/api/Tasks";
 import PopSound from "@/assets/sounds/pop.mp3";
 import { toast } from "vue3-toastify";
 const props = defineProps({
@@ -25,14 +25,16 @@ const props = defineProps({
     required: true,
   },
 });
+const currentTaskName = ref(props.taskData.taskName);
 const isChangingTaskName = ref(false);
-const changeTaskNameInput = ref(props.taskData.taskName);
+const changeTaskNameInput = ref(currentTaskName);
 const changeTaskNameInputRef = ref<HTMLInputElement | null>(null);
 
 const toggleIsChangingTaskName = () => {
+  console.log("Toggle Changing Task Name");
   if (isChangingTaskName.value) {
     isChangingTaskName.value = false;
-    changeTaskNameInput.value = props.taskData.taskName;
+    changeTaskNameInput.value = currentTaskName.value;
   } else {
     isChangingTaskName.value = true;
     setTimeout(() => {
@@ -41,8 +43,25 @@ const toggleIsChangingTaskName = () => {
   }
 };
 
-const handleChangeTaskName = async () => {};
-
+const handleChangeTaskName = async () => {
+  console.log("Changing Task Name");
+  try {
+    await updateTaskName(
+      props.projectId,
+      props.sectionId,
+      props.taskId,
+      changeTaskNameInput.value
+    );
+    toast.success("Task Name Changed! 🎉🎇🎉", {
+      autoClose: 1500,
+    });
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong 😢");
+  }
+  console.log("Called");
+  toggleIsChangingTaskName();
+};
 const completeTaskHandler = async () => {
   const audio = new Audio(PopSound);
   try {
@@ -81,14 +100,24 @@ const completeTaskHandler = async () => {
     >
       {{ props.taskData.taskName }}
     </button>
-    <form v-else @submit.prevent="handleChangeTaskName">
+    <form
+      class="change-task-name-form"
+      v-else
+      @submit.prevent="handleChangeTaskName"
+    >
       <input
         class="change-task-name-input"
         ref="changeTaskNameInputRef"
-        @blur="toggleIsChangingTaskName"
         type="text"
-        :value="changeTaskNameInput"
+        v-model="changeTaskNameInput"
       />
+      <button
+        type="submit"
+        class="change-task-name-btn"
+        data-cy="change-task-name-btn"
+      >
+        Save
+      </button>
     </form>
   </div>
 </template>
@@ -159,6 +188,13 @@ const completeTaskHandler = async () => {
   border-radius: 5px;
 }
 
+.change-task-name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
 .change-task-name-input {
   width: 100%;
   background-color: var(--dark-primary);
@@ -171,5 +207,23 @@ const completeTaskHandler = async () => {
     "Apple Color Emoji", Helvetica, Arial, sans-serif, "Segoe UI Emoji",
     "Segoe UI Symbol";
   font-size: 16px;
+}
+
+.change-task-name-btn {
+  width: 90px;
+  margin-left: auto;
+  border: none;
+  border-radius: 2px;
+  padding: 5px;
+  outline: none;
+  color: var(--cyan-secondary);
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  background-color: var(--dark-primary);
+  font-weight: bold;
+}
+
+.change-task-name-btn:hover {
+  background-color: var(--dark-secondary);
 }
 </style>

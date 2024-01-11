@@ -17,7 +17,6 @@ const projectSections = computed(() => {
     (a, b) =>
       a[1].createdAt.toDate().getTime() - b[1].createdAt.toDate().getTime()
   );
-  console.log(sections);
   return sections;
 });
 const projectId = computed(() => router.currentRoute.value.params.id);

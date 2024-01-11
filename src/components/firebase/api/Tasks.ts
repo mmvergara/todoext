@@ -26,6 +26,19 @@ export const addTask = async (
   return task;
 };
 
+export const updateTaskName = async (
+  projectId: string,
+  sectionId: string,
+  taskId: string,
+  newTaskName: string
+) => {
+  console.log(projectId, sectionId, taskId, newTaskName)
+  const projectRef = doc(FirestoreMain, "projects", projectId);
+  updateDoc(projectRef, {
+    [`sections.${sectionId}.tasks.${taskId}.taskName`]: newTaskName,
+  });
+};
+
 export const deleteTask = async (
   projectId: string,
   sectionId: string,
