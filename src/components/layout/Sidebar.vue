@@ -10,17 +10,7 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const user = computed(() => store.state.user);
-const quote = ref("");
 
-const fetchRandomQuote = async () => {
-  try {
-    const response = await fetch("http://api.quotable.io/random?maxLength=80");
-    const data = await response.json();
-    quote.value = data.content;
-  } catch (error) {
-    console.log(error);
-  }
-};
 const isLoading = ref(true);
 type ProjectLink = {
   id: string;
@@ -52,7 +42,6 @@ const fetchProjects = async () => {
     router.push(projectLinks.value[0].path);
   }
 };
-// http://api.quotable.io/random?maxLength=80
 
 const handleAddProject = async (project: ProjectLink) => {
   projectLinks.value.push(project);
@@ -60,7 +49,6 @@ const handleAddProject = async (project: ProjectLink) => {
 
 watchEffect(() => {
   fetchProjects();
-  fetchRandomQuote();
 });
 </script>
 
@@ -89,8 +77,6 @@ watchEffect(() => {
       </section>
     </div>
     <div class="sidebar-footer">
-      <p class="quote">{{ quote }}</p>
-
       <button class="logout-btn" @click="store.dispatch('logOut')">
         <LogoutSvg /> <span> Logout </span>
       </button>
@@ -203,15 +189,5 @@ watchEffect(() => {
   flex-direction: column;
   gap: 5px;
   width: 100%;
-}
-
-.quote {
-  font-size: 0.8rem;
-  color: var(--gray-primary);
-  text-align: center;
-  font-style: italic;
-  text-wrap: wrap;
-  margin: 0;
-  padding: 0;
 }
 </style>
