@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { FirestoreMain } from "../Firebase";
 import type { Task } from "../FirebaseTypes";
+import { generateTaskId } from "@/utils/helpers";
 
 export const addTask = async (
   projectID: string,
@@ -19,9 +20,7 @@ export const addTask = async (
     createdAt: Timestamp.now(),
   };
   await updateDoc(projectRef, {
-    [`sections.${sectionID}.tasks.${
-      new Date().getTime().toString() + taskName
-    }`]: task,
+    [`sections.${sectionID}.tasks.${generateTaskId()}`]: task,
   });
   return task;
 };
@@ -32,7 +31,7 @@ export const updateTaskName = async (
   taskId: string,
   newTaskName: string
 ) => {
-  console.log(projectId, sectionId, taskId, newTaskName)
+  console.log(projectId, sectionId, taskId, newTaskName);
   const projectRef = doc(FirestoreMain, "projects", projectId);
   updateDoc(projectRef, {
     [`sections.${sectionId}.tasks.${taskId}.taskName`]: newTaskName,

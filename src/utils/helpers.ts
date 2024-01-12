@@ -36,3 +36,7 @@ export const generateSectionId = () => {
   }
   return sectionId;
 };
+
+export const generateTaskId = () => {
+  return generateSectionId() + new Date().getTime().toString();
+};
