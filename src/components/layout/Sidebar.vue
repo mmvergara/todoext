@@ -5,6 +5,7 @@ import { useStore } from "@/store";
 import { getProjects } from "../firebase/api/Projects";
 import LogoutSvg from "@/components/icons/LogoutSvg.vue";
 import AddProject from "@/components/AddProject.vue";
+import type { Timestamp } from "firebase/firestore";
 
 const store = useStore();
 const route = useRoute();
@@ -16,6 +17,7 @@ type ProjectLink = {
   id: string;
   name: string;
   path: string;
+  createdAt: Timestamp;
 };
 const projectLinks = ref<ProjectLink[]>([]);
 
@@ -29,6 +31,15 @@ const fetchProjects = async () => {
           id: project.projectId,
           name: project.projectName,
           path: `/project/${project.projectId}`,
+          createdAt: project.createdAt,
+        });
+
+        // sort projects by createdAt
+        projectLinks.value = projectLinks.value.sort((a, b) => {
+          return (
+            b.createdAt.toDate().getSeconds() -
+            a.createdAt.toDate().getSeconds()
+          );
         });
       });
     }
